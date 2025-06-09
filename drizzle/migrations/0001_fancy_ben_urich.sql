@@ -1,0 +1,1 @@
+ALTER TABLE `comics` ADD `updatedAt` text NOT NULL;

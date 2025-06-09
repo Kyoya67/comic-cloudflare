@@ -17,7 +17,14 @@
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+	"d1_databases": [
+		{
+		"binding": "DB",
+		"database_name": "real-fight",
+		"database_id": "e4486129-8b15-4f8f-8b08-8630cda60c40"
+		}
+	]
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
