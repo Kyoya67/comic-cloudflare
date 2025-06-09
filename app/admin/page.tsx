@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Link from 'next/link';
 import ComicCard from '../../components/ComicCard';
 import { getComics } from '../../lib/getComics';

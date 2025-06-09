@@ -1,9 +1,11 @@
+import { apiFetch } from './apiClient';
+
 export async function uploadComic({ title, file }: { title: string, file: File }) {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('file', file);
 
-    const res = await fetch('http://localhost:8788/api/upload', {
+    const res = await apiFetch('/api/upload', {
         method: 'POST',
         body: formData,
     });
