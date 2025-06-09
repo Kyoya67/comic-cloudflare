@@ -4,6 +4,8 @@ import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Link from 'next/link';
 
+import { uploadComic } from '../../../lib/uploadComic';
+
 export default function NewComicPage() {
     const [title, setTitle] = useState('');
     const [file, setFile] = useState<File | null>(null);
@@ -20,8 +22,16 @@ export default function NewComicPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // ここでAPIに送信する処理を書く
-        alert(`タイトル: ${title}\nファイル: ${file?.name}`);
+        if (!title || !file) {
+            alert('タイトルとファイルを入力してください');
+            return;
+        }
+        try {
+            await uploadComic({ title, file });
+            alert('アップロードが完了しました');
+        } catch (error) {
+            alert('アップロードに失敗しました');
+        }
     };
 
     return (
@@ -54,7 +64,6 @@ export default function NewComicPage() {
                 <button
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded"
-                    disabled={!title || !file}
                 >
                     アップロード
                 </button>

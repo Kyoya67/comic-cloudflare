@@ -23,7 +23,7 @@ export default function ComicCard({ id, title, updatedAt, imageUrl, main, order 
                     ) : null}
                 </div>
                 <div className={main ? "p-6" : "p-4"}>
-                    <h3 className={main ? "text-2xl font-bold text-gray-900" : "text-lg font-semibold text-gray-900"}>【第{order}話】 {title}</h3>
+                    <h3 className={main ? "text-2xl font-bold text-gray-900" : "text-lg font-semibold text-gray-900 ml-[-0.7rem]"}>【第{order}話】 {title}</h3>
                     <p className={main ? "text-base text-gray-600" : "text-sm text-gray-600"}>{formatDate(updatedAt)}</p>
                 </div>
             </div>
