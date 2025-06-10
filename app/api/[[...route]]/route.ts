@@ -8,11 +8,16 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 const app = new Hono().basePath("/api");
 
 app.get("/comics", async (c) => {
-    const db = drizzle(
-        (getCloudflareContext().env as any).DB as unknown as D1Database
-    );
-    const comicsResponse = await db.select().from(comics);
-    return c.json(comicsResponse);
+    try {
+        const db = drizzle(
+            (getCloudflareContext().env as any).DB as unknown as D1Database
+        );
+        const comicsResponse = await db.select().from(comics);
+        return c.json(comicsResponse);
+    } catch (error) {
+        console.error('DB not found in getComics', error);
+        return c.json({ success: false, message: 'DB not found', error: error }, 500);
+    }
 });
 
 app.post("/upload", async (c) => {
@@ -31,6 +36,7 @@ app.post("/upload", async (c) => {
         const r2 = (getCloudflareContext().env as any).R2 as unknown as R2Bucket;
         await r2.put(fileName, file);
     } catch (r2Error) {
+        console.error('R2 not found in upload', r2Error);
         return c.json({ success: false, message: 'R2 not found', error: r2Error }, 500);
     }
 
@@ -52,6 +58,7 @@ app.post("/upload", async (c) => {
             updatedAt: new Date().toISOString(),
         });
     } catch (error) {
+        console.error('Comic uploaded failed', error);
         return c.json({ success: false, message: 'Comic uploaded failed' }, 500);
     }
     return c.json({ success: true, message: 'Comic uploaded successfully' });
