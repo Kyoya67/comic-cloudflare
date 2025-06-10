@@ -35,7 +35,6 @@ export default function ComicCard({ id, title, updatedAt, imageUrl, main, order,
             </div>
         );
 
-        // リストモードでは常にページ遷移
         return (
             <Link href={`/${id}`}>
                 {cardContent}
@@ -43,7 +42,6 @@ export default function ComicCard({ id, title, updatedAt, imageUrl, main, order,
         );
     }
 
-    // 通常のカード形式（mainモード）
     const cardContent = (
         <div className={`bg-white overflow-hidden ${isSelected ? 'bg-yellow-50' : ''
             }`}>

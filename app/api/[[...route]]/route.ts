@@ -1,5 +1,5 @@
 import { comics } from "@/db/schema";
-import { sql } from "drizzle-orm";
+import { sql, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
@@ -16,6 +16,26 @@ app.get("/comics", async (c) => {
         return c.json(comicsResponse);
     } catch (error) {
         console.error('DB not found in getComics', error);
+        return c.json({ success: false, message: 'DB not found', error: error }, 500);
+    }
+});
+
+app.get("/comics/:id", async (c) => {
+    const id = c.req.param('id');
+
+    try {
+        const db = drizzle(
+            (getCloudflareContext().env as any).DB as unknown as D1Database
+        );
+        const comicResponse = await db.select().from(comics).where(eq(comics.id, id));
+
+        if (comicResponse.length === 0) {
+            return c.json({ success: false, message: 'Comic not found' }, 404);
+        }
+
+        return c.json(comicResponse[0]);
+    } catch (error) {
+        console.error('DB not found in getComic', error);
         return c.json({ success: false, message: 'DB not found', error: error }, 500);
     }
 });

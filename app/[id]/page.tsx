@@ -7,5 +7,5 @@ interface PageProps {
 }
 
 export default function ComicPage({ params }: PageProps) {
-    return <ComicViewer initialComicId={params.id} />;
+    return <ComicViewer mainComicId={params.id} />;
 }
