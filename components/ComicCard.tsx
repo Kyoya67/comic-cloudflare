@@ -17,8 +17,8 @@ function formatDate(dateString: string) {
 
 export default function ComicCard({ id, title, updatedAt, main, order, isSelected, onClick }: ComicCardProps) {
     const cardContent = (
-        <div className={`flex items-center ${main ? 'p-6' : 'p-4'} ${isSelected ? 'bg-yellow-50' : 'bg-white'} hover:bg-gray-50 transition-colors`}>
-            <div className="w-4/5 max-w-[80vw] mx-auto">
+        <div className={`${main ? 'p-6' : 'p-4'} ${isSelected ? 'bg-yellow-50' : 'bg-white hover:bg-gray-100'} transition-colors`}>
+            <div className={`${main ? 'w-[79vw]' : 'w-full'} mx-auto`}>
                 <div className="flex items-center">
                     <div className="flex-grow">
                         <p className={`${main ? 'text-base' : 'text-sm'} text-gray-500 mb-1`}>{formatDate(updatedAt)}</p>
@@ -28,6 +28,14 @@ export default function ComicCard({ id, title, updatedAt, main, order, isSelecte
             </div>
         </div>
     );
+
+    if (main) {
+        return (
+            <div>
+                {cardContent}
+            </div>
+        );
+    }
 
     if (onClick) {
         return (
@@ -42,4 +50,4 @@ export default function ComicCard({ id, title, updatedAt, main, order, isSelecte
             {cardContent}
         </Link>
     );
-} 
+}

@@ -1,8 +1,8 @@
 'use client';
 
 import ComicCard from './ComicCard';
-import ComicNavigation from './ComicNavigation';
-import { useComicNavigation } from '../hooks/useComicNavigation';
+import ComicSwiper from './ComicSwiper';
+import PreloadImages from './PreloadImages';
 import type { Comic } from '../types/comic';
 
 interface ComicMainDisplayProps {
@@ -12,26 +12,17 @@ interface ComicMainDisplayProps {
 }
 
 export default function ComicMainDisplay({ selectedComic, comics, onComicSelect }: ComicMainDisplayProps) {
-    const { navigateToComic, canNavigatePrev, canNavigateNext } = useComicNavigation(
-        comics,
-        selectedComic,
-        onComicSelect
-    );
+    const sortedComics = [...comics].sort((a, b) => b.order - a.order);
+    const currentIndex = sortedComics.findIndex(comic => comic.id === selectedComic.id);
 
     return (
         <>
-            <div className="bg-gray-800 relative h-[500px]">
-                <ComicNavigation
-                    direction="prev"
-                    canNavigate={canNavigatePrev()}
-                    onClick={() => navigateToComic('prev')}
-                />
-                <ComicNavigation
-                    direction="next"
-                    canNavigate={canNavigateNext()}
-                    onClick={() => navigateToComic('next')}
-                />
-            </div>
+            <PreloadImages comics={sortedComics} currentIndex={currentIndex} />
+            <ComicSwiper
+                comics={comics}
+                selectedComic={selectedComic}
+                onComicSelect={onComicSelect}
+            />
             <div>
                 <ComicCard
                     id={selectedComic.id}

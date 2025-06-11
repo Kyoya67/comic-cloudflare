@@ -16,14 +16,15 @@ export default function ComicList({ comics, selectedComicId, onComicSelect }: Co
         <div>
             <div className="border-b border-black mb-6"></div>
             <div className="bg-white">
-                {sortedComicsForList.map((comic, index) => {
+                {sortedComicsForList.map((comic) => {
                     const isSelected = comic.id === selectedComicId;
                     return (
                         <div
                             key={comic.id}
                             onClick={() => onComicSelect(comic)}
-                            className="cursor-pointer hover:bg-gray-50"
+                            className="max-w-[80vw] mx-auto"
                         >
+                            <div className="border-t border-gray-200"></div>
                             <ComicCard
                                 id={comic.id}
                                 title={comic.title}
@@ -32,9 +33,7 @@ export default function ComicList({ comics, selectedComicId, onComicSelect }: Co
                                 order={comic.order}
                                 isSelected={isSelected}
                             />
-                            {index < sortedComicsForList.length - 1 && (
-                                <div className="border-b border-gray-200"></div>
-                            )}
+                            <div className="border-t border-gray-200"></div>
                         </div>
                     );
                 })}

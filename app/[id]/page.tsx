@@ -1,4 +1,5 @@
 import ComicViewer from '../../components/ComicViewer';
+import Header from '../../components/Header';
 
 interface PageProps {
     params: {
@@ -7,5 +8,10 @@ interface PageProps {
 }
 
 export default function ComicPage({ params }: PageProps) {
-    return <ComicViewer mainComicId={params.id} />;
+    return (
+        <>
+            <Header />
+            <ComicViewer mainComicId={params.id} />
+        </>
+    );
 }

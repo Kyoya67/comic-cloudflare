@@ -33,15 +33,15 @@ export default function ComicViewer({ mainComicId }: ComicViewerProps) {
 
     if (!selectedComic) {
         return (
-            <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+            <div className="bg-gray-100 flex items-center justify-center">
                 <div className="text-lg">読み込み中...</div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+        <>
+            <main className="mx-auto">
                 <ComicMainDisplay
                     selectedComic={selectedComic}
                     comics={comics}
@@ -53,6 +53,6 @@ export default function ComicViewer({ mainComicId }: ComicViewerProps) {
                     onComicSelect={handleComicSelect}
                 />
             </main>
-        </div>
+        </>
     );
 } 

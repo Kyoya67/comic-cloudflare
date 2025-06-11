@@ -40,6 +40,30 @@ app.get("/comics/:id", async (c) => {
     }
 });
 
+app.get("/image/:filename", async (c) => {
+    const filename = c.req.param('filename');
+    if (!filename) {
+        return c.text('No filename provided', 400);
+    }
+
+    try {
+        const r2 = (getCloudflareContext().env as any).R2 as unknown as R2Bucket;
+        const object = await r2.get(filename);
+        if (!object) {
+            return c.text('Not found', 404);
+        }
+        return new Response(object.body, {
+            headers: {
+                'Content-Type': object.httpMetadata?.contentType || 'application/octet-stream',
+                'Cache-Control': 'public, max-age=31536000',
+            },
+        });
+    } catch (error) {
+        console.error('R2 fetch error', error);
+        return c.text('R2 fetch error', 500);
+    }
+});
+
 app.post("/upload", async (c) => {
     const formData = await c.req.formData();
     const title = formData.get('title');
