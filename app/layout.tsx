@@ -2,7 +2,6 @@
 
 import { usePathname } from 'next/navigation';
 import "./globals.css";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export default function RootLayout({
@@ -16,7 +15,6 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        {!isAdminPage && <Header />}
         {children}
         <Footer />
       </body>

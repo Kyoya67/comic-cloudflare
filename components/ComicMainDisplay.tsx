@@ -1,38 +1,64 @@
 'use client';
 
+import { useState } from 'react';
+import ComicSlider from './ComicSlider';
 import ComicCard from './ComicCard';
-import ComicSwiper from './ComicSwiper';
 import PreloadImages from './PreloadImages';
-import type { Comic } from '../types/comic';
+import FullscreenView from './FullscreenView';
+import { useComics } from '../context/ComicsContext';
 
-interface ComicMainDisplayProps {
-    selectedComic: Comic;
-    comics: Comic[];
-    onComicSelect: (comic: Comic) => void;
-}
+export default function ComicMainDisplay() {
+    const { comics, selectedComic, setSelectedComic } = useComics();
+    const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
 
-export default function ComicMainDisplay({ selectedComic, comics, onComicSelect }: ComicMainDisplayProps) {
+    if (!selectedComic) {
+        return (
+            <div className="bg-gray-900 h-[500px] flex items-center justify-center">
+                <div className="text-white">選択されたコミックがありません</div>
+            </div>
+        );
+    }
+
     const sortedComics = [...comics].sort((a, b) => b.order - a.order);
     const currentIndex = sortedComics.findIndex(comic => comic.id === selectedComic.id);
 
+    const handleComicSelect = (comic: any) => {
+        setSelectedComic(comic);
+    };
+
     return (
         <>
-            <PreloadImages comics={sortedComics} currentIndex={currentIndex} />
-            <ComicSwiper
+            <ComicSlider
                 comics={comics}
                 selectedComic={selectedComic}
-                onComicSelect={onComicSelect}
+                onComicSelect={handleComicSelect}
+                onOpenModal={() => setIsFullscreenOpen(true)}
             />
-            <div>
+            <PreloadImages
+                comics={sortedComics}
+                currentIndex={currentIndex}
+                preloadRange={2}
+            />
+
+            <div className="bg-white">
                 <ComicCard
                     id={selectedComic.id}
                     title={selectedComic.title}
                     updatedAt={selectedComic.updatedAt}
                     imageUrl={selectedComic.imageUrl}
-                    main
                     order={selectedComic.order}
+                    main
                 />
             </div>
+
+            <FullscreenView
+                comic={selectedComic}
+                comics={sortedComics}
+                currentIndex={currentIndex}
+                isOpen={isFullscreenOpen}
+                onClose={() => setIsFullscreenOpen(false)}
+                onComicSelect={handleComicSelect}
+            />
         </>
     );
 } 

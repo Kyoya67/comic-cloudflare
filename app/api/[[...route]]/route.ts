@@ -20,28 +20,9 @@ app.get("/comics", async (c) => {
     }
 });
 
-app.get("/comics/:id", async (c) => {
-    const id = c.req.param('id');
-
-    try {
-        const db = drizzle(
-            (getCloudflareContext().env as any).DB as unknown as D1Database
-        );
-        const comicResponse = await db.select().from(comics).where(eq(comics.id, id));
-
-        if (comicResponse.length === 0) {
-            return c.json({ success: false, message: 'Comic not found' }, 404);
-        }
-
-        return c.json(comicResponse[0]);
-    } catch (error) {
-        console.error('DB not found in getComic', error);
-        return c.json({ success: false, message: 'DB not found', error: error }, 500);
-    }
-});
-
 app.get("/image/:filename", async (c) => {
     const filename = c.req.param('filename');
+
     if (!filename) {
         return c.text('No filename provided', 400);
     }
@@ -49,15 +30,24 @@ app.get("/image/:filename", async (c) => {
     try {
         const r2 = (getCloudflareContext().env as any).R2 as unknown as R2Bucket;
         const object = await r2.get(filename);
+
         if (!object) {
             return c.text('Not found', 404);
         }
-        return new Response(object.body, {
-            headers: {
-                'Content-Type': object.httpMetadata?.contentType || 'application/octet-stream',
-                'Cache-Control': 'public, max-age=31536000',
-            },
+
+        const headers = new Headers({
+            'Content-Type': object.httpMetadata?.contentType || 'application/octet-stream',
+            'Cache-Control': 'public, max-age=31536000, immutable',
+            'ETag': object.httpEtag || '',
         });
+
+        // ETag check for 304 Not Modified
+        const ifNoneMatch = c.req.header('If-None-Match');
+        if (ifNoneMatch && ifNoneMatch === object.httpEtag) {
+            return new Response(null, { status: 304, headers });
+        }
+
+        return new Response(object.body, { headers });
     } catch (error) {
         console.error('R2 fetch error', error);
         return c.text('R2 fetch error', 500);

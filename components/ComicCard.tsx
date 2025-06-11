@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import type { Comic } from '../types/comic';
 
 interface ComicCardProps extends Comic {
@@ -15,7 +14,7 @@ function formatDate(dateString: string) {
     return `${year}年${month}月${day}日`;
 }
 
-export default function ComicCard({ id, title, updatedAt, main, order, isSelected, onClick }: ComicCardProps) {
+export default function ComicCard({ title, updatedAt, main, order, isSelected, onClick }: ComicCardProps) {
     const cardContent = (
         <div className={`${main ? 'p-6' : 'p-4'} ${isSelected ? 'bg-yellow-50' : 'bg-white hover:bg-gray-100'} transition-colors`}>
             <div className={`${main ? 'w-[79vw]' : 'w-full'} mx-auto`}>
@@ -37,17 +36,9 @@ export default function ComicCard({ id, title, updatedAt, main, order, isSelecte
         );
     }
 
-    if (onClick) {
-        return (
-            <div onClick={onClick} className="cursor-pointer">
-                {cardContent}
-            </div>
-        );
-    }
-
     return (
-        <Link href={`/${id}`}>
+        <div onClick={onClick} className="cursor-pointer">
             {cardContent}
-        </Link>
+        </div>
     );
 }
