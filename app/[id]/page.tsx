@@ -1,5 +1,9 @@
 import ComicViewer from '../../components/ComicViewer';
-import Header from '../../components/Header';
+import { getComics } from '../../lib/getComics';
+import { ComicsProvider } from '../../context/ComicsContext';
+
+// 動的レンダリングを強制（プリレンダリングをスキップ）
+export const dynamic = 'force-dynamic';
 
 interface PageProps {
     params: {
@@ -7,11 +11,12 @@ interface PageProps {
     };
 }
 
-export default function ComicPage({ params }: PageProps) {
+export default async function ComicPage({ params }: PageProps) {
+    const comics = await getComics();
+
     return (
-        <>
-            <Header />
+        <ComicsProvider initialComics={comics}>
             <ComicViewer mainComicId={params.id} />
-        </>
+        </ComicsProvider>
     );
 }

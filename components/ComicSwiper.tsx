@@ -71,8 +71,8 @@ export default function ComicSwiper({ comics, selectedComic, onComicSelect }: Co
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <div className="swiper-button-prev !text-white !text-2xl !w-12 !h-12 !mt-0 !top-1/2 !left-4 !transform !-translate-y-1/2"></div>
-            <div className="swiper-button-next !text-white !text-2xl !w-12 !h-12 !mt-0 !top-1/2 !right-4 !transform !-translate-y-1/2"></div>
+            <div className="swiper-button-prev hidden md:flex !text-white !text-2xl !w-12 !h-12 !mt-0 !top-1/2 !left-4 !transform !-translate-y-1/2 !items-center !justify-center"></div>
+            <div className="swiper-button-next hidden md:flex !text-white !text-2xl !w-12 !h-12 !mt-0 !top-1/2 !right-4 !transform !-translate-y-1/2 !items-center !justify-center"></div>
         </div>
     );
 } 

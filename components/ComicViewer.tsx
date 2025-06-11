@@ -16,7 +16,7 @@ export default function ComicViewer({ mainComicId }: ComicViewerProps) {
     const { comics, selectedComic, setSelectedComic } = useComics();
 
     useEffect(() => {
-        if (mainComicId) {
+        if (mainComicId && comics.length > 0) {
             const targetComic = comics.find(comic => comic.id === mainComicId);
             if (targetComic) {
                 setSelectedComic(targetComic);
@@ -33,7 +33,7 @@ export default function ComicViewer({ mainComicId }: ComicViewerProps) {
 
     if (!selectedComic) {
         return (
-            <div className="bg-gray-100 flex items-center justify-center">
+            <div className="bg-gray-100 flex items-center justify-center min-h-screen">
                 <div className="text-lg">読み込み中...</div>
             </div>
         );

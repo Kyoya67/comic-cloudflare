@@ -9,7 +9,7 @@ interface PreloadImagesProps {
     preloadRange?: number;
 }
 
-export default function PreloadImages({ comics, currentIndex, preloadRange = 1 }: PreloadImagesProps) {
+export default function PreloadImages({ comics, currentIndex, preloadRange = 3 }: PreloadImagesProps) {
     useEffect(() => {
         const start = Math.max(0, currentIndex - preloadRange);
         const end = Math.min(comics.length, currentIndex + preloadRange + 1);
