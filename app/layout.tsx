@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
+import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import "./globals.css";
 
 // Next.js 14で利用可能なフォントに変更
 const inter = Inter({
