@@ -39,34 +39,34 @@ export default function NewComicPage() {
         <div className="min-h-screen bg-gray-900">
             <AdminHeader showAddButton={false} />
 
-            <main className="max-w-xl mx-auto py-10">
-                <form onSubmit={handleSubmit} className="space-y-6">
+            <main className="max-w-xl mx-auto py-6 px-4 sm:py-10 sm:px-0">
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                     <div>
-                        <label className="block mb-2 font-semibold">タイトル</label>
+                        <label className="block mb-2 font-semibold text-white text-sm sm:text-base">タイトル</label>
                         <input
                             type="text"
-                            className="w-full border rounded px-3 py-2"
+                            className="w-full border rounded px-3 py-2 text-sm sm:text-base"
                             value={title}
                             onChange={e => setTitle(e.target.value)}
                             required
                         />
                     </div>
-                    <div {...getRootProps()} className="border-2 border-dashed rounded p-6 text-center cursor-pointer bg-gray-50">
+                    <div {...getRootProps()} className="border-2 border-dashed rounded p-4 sm:p-6 text-center cursor-pointer bg-gray-50 min-h-[120px] sm:min-h-[160px]">
                         <input {...getInputProps()} />
                         {isDragActive ? (
-                            <p>ここに画像をドロップしてください...</p>
+                            <p className="text-sm sm:text-base">ここに画像をドロップしてください...</p>
                         ) : file ? (
                             <div>
-                                <p>選択されたファイル: {file.name}</p>
-                                <img src={URL.createObjectURL(file)} alt="preview" className="max-h-48 mx-auto mt-2" />
+                                <p className="text-sm sm:text-base mb-2">選択されたファイル: {file.name}</p>
+                                <img src={URL.createObjectURL(file)} alt="preview" className="max-h-32 sm:max-h-48 mx-auto mt-2 rounded" />
                             </div>
                         ) : (
-                            <p>ここに画像をドラッグ＆ドロップ、またはクリックして選択</p>
+                            <p className="text-sm sm:text-base">ここに画像をドラッグ＆ドロップ、またはクリックして選択</p>
                         )}
                     </div>
                     <button
                         type="submit"
-                        className="gap-2 px-3 py-2 bg-gray-800 text-white text-sm font-medium  border border-gray-600 hover:bg-gray-700 transition-all"
+                        className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-3 sm:py-2 bg-gray-800 text-white text-sm sm:text-base font-medium border border-gray-600 hover:bg-gray-700 transition-all rounded"
                     >
                         アップロード
                     </button>

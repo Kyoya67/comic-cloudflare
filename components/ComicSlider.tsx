@@ -142,24 +142,27 @@ export default function ComicSlider({ comics, selectedComic, onComicSelect, onOp
                 </svg>
             </button>
 
-            <div className="absolute bottom-4 right-4 z-10 flex gap-2">
+            <div className="absolute bottom-4 right-4 z-10 flex flex-col sm:flex-row gap-2">
                 <button
                     onClick={onOpenModal}
-                    className="flex items-center gap-2 px-3 py-2 bg-gray-800 bg-opacity-80 hover:bg-opacity-90 text-white text-sm font-medium  border border-gray-600 transition-all"
+                    className="flex items-center justify-center sm:gap-2 px-2 sm:px-3 py-2 bg-gray-800 bg-opacity-80 hover:bg-opacity-90 text-white text-xs sm:text-sm font-medium border border-gray-600 transition-all"
                 >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2" strokeWidth={2} />
                         <path strokeWidth={2} d="M9 9h6v6H9z" />
                     </svg>
-                    全画面
+                    <span className="hidden sm:inline">全画面</span>
                 </button>
                 <button
                     onClick={() => {
                         router.push('/admin');
                     }}
-                    className="flex items-center gap-2 px-3 py-2 bg-gray-800 bg-opacity-80 hover:bg-opacity-90 text-white text-sm font-medium  border border-gray-600 transition-all"
+                    className="flex items-center justify-center sm:gap-2 px-2 sm:px-3 py-2 bg-gray-800 bg-opacity-80 hover:bg-opacity-90 text-white text-xs sm:text-sm font-medium border border-gray-600 transition-all"
                 >
-                    管理画面
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+                    </svg>
+                    <span className="hidden sm:inline">管理画面</span>
                 </button>
             </div>
         </div>

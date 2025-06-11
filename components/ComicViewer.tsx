@@ -55,7 +55,7 @@ export default function ComicViewer({ mainComicId }: ComicViewerProps) {
 
     return (
         <>
-            <main className="mx-auto">
+            <main className="mx-auto mb-6">
                 <ComicMainDisplay />
                 <ComicList
                     comics={comics}

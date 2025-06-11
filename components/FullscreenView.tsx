@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import type { Comic } from '../types/comic';
 
@@ -14,6 +14,10 @@ interface FullscreenViewProps {
 }
 
 export default function FullscreenView({ comic, comics, currentIndex, isOpen, onClose, onComicSelect }: FullscreenViewProps) {
+    const touchStartX = useRef(0);
+    const touchStartY = useRef(0);
+    const isDragging = useRef(false);
+
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
@@ -21,13 +25,26 @@ export default function FullscreenView({ comic, comics, currentIndex, isOpen, on
             }
         };
 
+        const handleKeyDown = (e: KeyboardEvent) => {
+            switch (e.key) {
+                case 'ArrowLeft':
+                    goToPrevious();
+                    break;
+                case 'ArrowRight':
+                    goToNext();
+                    break;
+            }
+        };
+
         if (isOpen) {
             document.addEventListener('keydown', handleEscape);
+            document.addEventListener('keydown', handleKeyDown);
             document.body.style.overflow = 'hidden';
         }
 
         return () => {
             document.removeEventListener('keydown', handleEscape);
+            document.removeEventListener('keydown', handleKeyDown);
             document.body.style.overflow = 'unset';
         };
     }, [isOpen, onClose]);
@@ -44,10 +61,43 @@ export default function FullscreenView({ comic, comics, currentIndex, isOpen, on
         }
     };
 
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStartX.current = e.touches[0].clientX;
+        touchStartY.current = e.touches[0].clientY;
+        isDragging.current = true;
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (!isDragging.current) return;
+        e.preventDefault();
+    };
+
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        if (!isDragging.current) return;
+
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        const diffX = touchStartX.current - touchEndX;
+        const diffY = Math.abs(touchStartY.current - touchEndY);
+
+        if (Math.abs(diffX) > 30 && diffY < 150) {
+            if (diffX > 0) {
+                goToNext(); // Swipe left = next
+            } else {
+                goToPrevious(); // Swipe right = previous
+            }
+        }
+
+        isDragging.current = false;
+    };
+
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black z-50">
+        <div className="fixed inset-0 bg-black z-50"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}>
             <div
                 className="absolute inset-0 z-10"
                 onClick={onClose}
@@ -65,7 +115,7 @@ export default function FullscreenView({ comic, comics, currentIndex, isOpen, on
             {currentIndex > 0 && (
                 <button
                     onClick={goToPrevious}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full flex items-center justify-center transition-all"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full hidden md:flex items-center justify-center transition-all"
                 >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -76,7 +126,7 @@ export default function FullscreenView({ comic, comics, currentIndex, isOpen, on
             {currentIndex < comics.length - 1 && (
                 <button
                     onClick={goToNext}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full flex items-center justify-center transition-all"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full hidden md:flex items-center justify-center transition-all"
                 >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
