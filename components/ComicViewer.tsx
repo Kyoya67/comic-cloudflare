@@ -1,59 +1,31 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import ComicMainDisplay from './ComicMainDisplay';
-import ComicList from './ComicList';
+import ComicCard from './ComicCard';
 import { getComics } from '../lib/getComics';
-import { getComic } from '../lib/getComic';
 import type { Comic } from '../types/comic';
 
 interface ComicViewerProps {
-    mainComicId?: string;
+    initialComicId?: string;
 }
 
-export default function ComicViewer({ mainComicId }: ComicViewerProps) {
-    // クライアントサイドでのみログ出力
-    if (typeof window !== 'undefined') {
-        console.log(`🚀 ComicViewer rendered with mainComicId: ${mainComicId}`);
-    }
-
+export default function ComicViewer({ initialComicId }: ComicViewerProps) {
     const [comics, setComics] = useState<Comic[]>([]);
     const [selectedComic, setSelectedComic] = useState<Comic | null>(null);
     const [loading, setLoading] = useState(true);
-    const [initialLoadDone, setInitialLoadDone] = useState(false);
 
-    // マウント時のログ（クライアントサイドのみ）
     useEffect(() => {
-        console.log('📦 ComicViewer mounted');
-        return () => {
-            console.log('📤 ComicViewer unmounted');
-        };
-    }, []);
-
-    // 初回の全データ取得（一度だけ）
-    useEffect(() => {
-        console.log(`🔄 useEffect[initialLoad] triggered - initialLoadDone: ${initialLoadDone}, mainComicId: ${mainComicId}`);
-
-        async function loadInitialComics() {
-            if (initialLoadDone) {
-                console.log('⏭️ Skipping initial load - already done');
-                return;
-            }
-
-            console.log('🎯 Starting initial load...');
+        async function loadComics() {
             try {
                 const data = await getComics();
-                setComics(data);
-                setInitialLoadDone(true);
+                const sortedComics = data.sort((a, b) => a.order - b.order);
+                setComics(sortedComics);
 
-                // 初回時のみ選択コミック設定
-                if (mainComicId) {
-                    const targetComic = data.find(comic => comic.id === mainComicId);
-                    setSelectedComic(targetComic || data[0]);
-                    console.log(`🎯 Initial comic selected: ${targetComic?.title || data[0]?.title}`);
+                if (initialComicId) {
+                    const targetComic = sortedComics.find(comic => comic.id === initialComicId);
+                    setSelectedComic(targetComic || sortedComics[0]);
                 } else {
-                    setSelectedComic(data[0]);
-                    console.log(`🎯 Default comic selected: ${data[0]?.title}`);
+                    setSelectedComic(sortedComics[0]);
                 }
             } catch (error) {
                 console.error('Failed to load comics:', error);
@@ -61,48 +33,8 @@ export default function ComicViewer({ mainComicId }: ComicViewerProps) {
                 setLoading(false);
             }
         }
-        loadInitialComics();
-    }, [initialLoadDone, mainComicId]);
-
-    // mainComicIdが変化した時の処理（初回ロード完了後のみ）
-    useEffect(() => {
-        console.log(`🔄 useEffect[mainComicIdChange] triggered - initialLoadDone: ${initialLoadDone}, mainComicId: ${mainComicId}, comics.length: ${comics.length}`);
-
-        if (!initialLoadDone || !mainComicId) {
-            console.log('⏭️ Skipping mainComicId change - conditions not met');
-            return;
-        }
-
-        async function handleComicIdChange() {
-            if (typeof mainComicId !== 'string') return;
-
-            console.log(`🔍 Looking for existing comic with id: ${mainComicId}`);
-            const existingComic = comics.find(comic => comic.id === mainComicId);
-
-            if (existingComic) {
-                console.log(`✨ Using existing comic: ${existingComic.title}`);
-                setSelectedComic(existingComic);
-            } else {
-                console.log(`🌐 Fetching new comic with id: ${mainComicId}`);
-                try {
-                    const comic = await getComic(mainComicId);
-                    if (comic) {
-                        setSelectedComic(comic);
-                        setComics(prev => [...prev, comic]);
-                        console.log(`✅ New comic added: ${comic.title}`);
-                    } else {
-                        setSelectedComic(comics[0] || null);
-                        console.log('❌ Comic not found, using fallback');
-                    }
-                } catch (error) {
-                    console.error('Failed to load comic:', error);
-                    setSelectedComic(comics[0] || null);
-                }
-            }
-        }
-
-        handleComicIdChange();
-    }, [mainComicId, initialLoadDone, comics]);
+        loadComics();
+    }, [initialComicId]);
 
     if (loading) {
         return (
@@ -116,15 +48,41 @@ export default function ComicViewer({ mainComicId }: ComicViewerProps) {
         <div className="min-h-screen bg-gray-100">
             <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
                 {selectedComic && (
-                    <ComicMainDisplay
-                        selectedComic={selectedComic}
-                        comics={comics}
-                    />
+                    <div className="mb-12">
+                        <ComicCard
+                            id={selectedComic.id}
+                            title={selectedComic.title}
+                            updatedAt={selectedComic.updatedAt}
+                            imageUrl={selectedComic.imageUrl}
+                            main
+                            order={selectedComic.order}
+                        />
+                    </div>
                 )}
-                <ComicList
-                    comics={comics}
-                    selectedComicId={selectedComic?.id || null}
-                />
+                <div>
+                    <div className="border-b border-black mb-6"></div>
+                    <div className="bg-white">
+                        {comics.map((comic, index) => {
+                            const isSelected = comic.id === selectedComic?.id;
+                            return (
+                                <div key={comic.id}>
+                                    <ComicCard
+                                        id={comic.id}
+                                        title={comic.title}
+                                        updatedAt={comic.updatedAt}
+                                        imageUrl={comic.imageUrl}
+                                        order={comic.order}
+                                        isSelected={isSelected}
+                                        listMode={true}
+                                    />
+                                    {index < comics.length - 1 && (
+                                        <div className="border-b border-gray-200"></div>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
             </main>
         </div>
     );
