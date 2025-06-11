@@ -1,12 +1,15 @@
+'use client';
+
 import ComicCard from './ComicCard';
 import type { Comic } from '../types/comic';
 
 interface ComicListProps {
     comics: Comic[];
     selectedComicId: string | null;
+    onComicSelect: (comic: Comic) => void;
 }
 
-export default function ComicList({ comics, selectedComicId }: ComicListProps) {
+export default function ComicList({ comics, selectedComicId, onComicSelect }: ComicListProps) {
     const sortedComicsForList = [...comics].sort((a, b) => b.order - a.order);
 
     return (
@@ -16,7 +19,11 @@ export default function ComicList({ comics, selectedComicId }: ComicListProps) {
                 {sortedComicsForList.map((comic, index) => {
                     const isSelected = comic.id === selectedComicId;
                     return (
-                        <div key={comic.id}>
+                        <div
+                            key={comic.id}
+                            onClick={() => onComicSelect(comic)}
+                            className="cursor-pointer hover:bg-gray-50"
+                        >
                             <ComicCard
                                 id={comic.id}
                                 title={comic.title}
@@ -24,7 +31,6 @@ export default function ComicList({ comics, selectedComicId }: ComicListProps) {
                                 imageUrl={comic.imageUrl}
                                 order={comic.order}
                                 isSelected={isSelected}
-                                listMode={true}
                             />
                             {index < sortedComicsForList.length - 1 && (
                                 <div className="border-b border-gray-200"></div>
