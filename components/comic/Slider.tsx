@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import ComicImageSlide from './ComicImageSlide';
-import type { Comic } from '../types/comic';
+import ImageSlide from './ImageSlide';
+import type { Comic } from '../../types/comic';
 import { useRouter } from 'next/navigation';
 
 interface ComicSwiperProps {
@@ -12,7 +12,7 @@ interface ComicSwiperProps {
     onOpenModal: () => void;
 }
 
-export default function ComicSlider({ comics, selectedComic, onComicSelect, onOpenModal }: ComicSwiperProps) {
+export default function Slider({ comics, selectedComic, onComicSelect, onOpenModal }: ComicSwiperProps) {
     const sortedComics = [...comics].sort((a, b) => b.order - a.order);
     const router = useRouter();
     const [currentIndex, setCurrentIndex] = useState(
@@ -114,7 +114,7 @@ export default function ComicSlider({ comics, selectedComic, onComicSelect, onOp
                         key={comic.id}
                         className="w-full h-full flex-shrink-0"
                     >
-                        <ComicImageSlide
+                        <ImageSlide
                             comic={comic}
                             isSelected={index === currentIndex}
                         />

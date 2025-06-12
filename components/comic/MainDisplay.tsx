@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import ComicSlider from './ComicSlider';
-import ComicCard from './ComicCard';
-import PreloadImages from './PreloadImages';
-import FullscreenView from './FullscreenView';
-import { useComics } from '../context/ComicsContext';
+import Slider from './Slider';
+import Card from './Card';
+import PreloadImages from '../PreloadImages';
+import FullscreenView from '../FullscreenView';
+import { useComics } from '../../context/ComicsContext';
 
-export default function ComicMainDisplay() {
+export default function MainDisplay() {
     const { comics, selectedComic, setSelectedComic } = useComics();
     const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
 
@@ -28,7 +28,7 @@ export default function ComicMainDisplay() {
 
     return (
         <>
-            <ComicSlider
+            <Slider
                 comics={comics}
                 selectedComic={selectedComic}
                 onComicSelect={handleComicSelect}
@@ -41,7 +41,7 @@ export default function ComicMainDisplay() {
             />
 
             <div className="bg-white">
-                <ComicCard
+                <Card
                     id={selectedComic.id}
                     title={selectedComic.title}
                     updatedAt={selectedComic.updatedAt}

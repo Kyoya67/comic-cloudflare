@@ -1,7 +1,5 @@
-'use client';
-
-import ComicCard from './ComicCard';
-import type { Comic } from '../types/comic';
+import Card from './Card';
+import type { Comic } from '../../types/comic';
 
 interface ComicListProps {
     comics: Comic[];
@@ -9,7 +7,7 @@ interface ComicListProps {
     onComicSelect: (comic: Comic) => void;
 }
 
-export default function ComicList({ comics, selectedComicId, onComicSelect }: ComicListProps) {
+export default function List({ comics, selectedComicId, onComicSelect }: ComicListProps) {
     const sortedComicsForList = [...comics].sort((a, b) => b.order - a.order);
 
     return (
@@ -25,7 +23,7 @@ export default function ComicList({ comics, selectedComicId, onComicSelect }: Co
                             className="max-w-[80vw] mx-auto"
                         >
                             <div className="border-t border-gray-200"></div>
-                            <ComicCard
+                            <Card
                                 id={comic.id}
                                 title={comic.title}
                                 updatedAt={comic.updatedAt}
@@ -40,4 +38,4 @@ export default function ComicList({ comics, selectedComicId, onComicSelect }: Co
             </div>
         </div>
     );
-} 
+}

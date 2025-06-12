@@ -2,14 +2,14 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import type { Comic } from '../types/comic';
+import type { Comic } from '../../types/comic';
 
 interface ComicImageSlideProps {
     comic: Comic;
     isSelected: boolean;
 }
 
-export default function ComicImageSlide({ comic, isSelected }: ComicImageSlideProps) {
+export default function ImageSlide({ comic, isSelected }: ComicImageSlideProps) {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageError, setImageError] = useState(false);
 

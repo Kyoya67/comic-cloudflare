@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 
-import ComicCard from '../../components/ComicCard';
+import Card from '../../components/comic/Card';
 import AdminHeader from '../../components/AdminHeader';
 import { getComics } from '../../lib/getComics';
 import type { Comic } from '../../types/comic';
@@ -15,7 +15,7 @@ export default async function AdminPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {comics.map((comic) => (
                         <div key={comic.id} className="relative">
-                            <ComicCard
+                            <Card
                                 id={comic.id}
                                 title={comic.title}
                                 updatedAt={comic.updatedAt}
