@@ -30,7 +30,7 @@ export default function MainDisplay() {
         <>
             <Slider
                 comics={comics}
-                selectedComic={selectedComic}
+                selectedComicId={selectedComic.id}
                 onComicSelect={handleComicSelect}
                 onOpenModal={() => setIsFullscreenOpen(true)}
             />
@@ -39,7 +39,6 @@ export default function MainDisplay() {
                 currentIndex={currentIndex}
                 preloadRange={2}
             />
-
             <Card
                 id={selectedComic.id}
                 title={selectedComic.title}
@@ -48,7 +47,6 @@ export default function MainDisplay() {
                 order={selectedComic.order}
                 main
             />
-
             <FullscreenView
                 comic={selectedComic}
                 comics={comics}

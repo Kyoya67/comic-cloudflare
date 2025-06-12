@@ -11,8 +11,8 @@ export default function AdminHeader({ showAddButton = true }: AdminHeaderProps) 
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0">
                     <h1 className="text-xl sm:text-3xl font-bold text-white">
                         管理画面
-                        <span className="text-sm sm:text-lg block sm:inline">
-                            {showAddButton ? '' : '／ 画像をアップロード'}
+                        <span className="text-sm sm:text-lg inline-block ml-2">
+                            {showAddButton ? '／ 編集・削除' : '／ 新規追加'}
                         </span>
                     </h1>
                     <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">

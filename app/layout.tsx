@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
   title: {
-    default: "リアルファイト - ホンモノの戦い",
+    default: "リアルファイト：ホンモノの戦い",
     template: "%s | リアルファイト"
   },
   description: "リアルファイトの漫画を読むことができる漫画ビューアです。",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "ja_JP",
-    title: "リアルファイト - ホンモノの戦い",
+    title: "リアルファイト：ホンモノの戦い",
     description: "リアルファイトの漫画を読むことができる漫画ビューアです",
     siteName: "リアルファイト",
     images: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "リアルファイト - ホンモノの戦い",
+    title: "リアルファイト：ホンモノの戦い",
     description: "リアルファイトの漫画を読むことができる漫画ビューアです",
     images: [
       {

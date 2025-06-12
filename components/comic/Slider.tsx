@@ -1,45 +1,38 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import ImageSlide from './ImageSlide';
 import type { Comic } from '../../types/comic';
 import { useRouter } from 'next/navigation';
 
 interface ComicSwiperProps {
     comics: Comic[];
-    selectedComic: Comic;
+    selectedComicId: string;
     onComicSelect: (comic: Comic) => void;
     onOpenModal: () => void;
 }
 
-export default function Slider({ comics, selectedComic, onComicSelect, onOpenModal }: ComicSwiperProps) {
-    const sortedComics = [...comics].sort((a, b) => b.order - a.order);
+export default function Slider({ comics, selectedComicId, onComicSelect, onOpenModal }: ComicSwiperProps) {
     const router = useRouter();
-    const [currentIndex, setCurrentIndex] = useState(
-        sortedComics.findIndex(comic => comic.id === selectedComic.id)
-    );
     const [isTransitioning, setIsTransitioning] = useState(false);
     const sliderRef = useRef<HTMLDivElement>(null);
     const touchStartX = useRef(0);
     const touchStartY = useRef(0);
     const isDragging = useRef(false);
 
-    useEffect(() => {
-        const newIndex = sortedComics.findIndex(comic => comic.id === selectedComic.id);
-        if (newIndex !== -1 && newIndex !== currentIndex) {
-            setCurrentIndex(newIndex);
-        }
-    }, [selectedComic.id, sortedComics, currentIndex]);
+    const currentIndex = useMemo(() =>
+        comics.findIndex(comic => comic.id === selectedComicId),
+        [comics, selectedComicId]
+    );
 
     const goToSlide = useCallback((index: number) => {
-        if (index < 0 || index >= sortedComics.length || isTransitioning) return;
+        if (index < 0 || index >= comics.length || isTransitioning) return;
 
         setIsTransitioning(true);
-        setCurrentIndex(index);
-        onComicSelect(sortedComics[index]);
+        onComicSelect(comics[index]);
 
         setTimeout(() => setIsTransitioning(false), 300);
-    }, [sortedComics, onComicSelect, isTransitioning]);
+    }, [comics, onComicSelect, isTransitioning]);
 
     const goToPrevious = useCallback(() => {
         goToSlide(currentIndex - 1);
@@ -97,7 +90,7 @@ export default function Slider({ comics, selectedComic, onComicSelect, onOpenMod
     }, [goToNext, goToPrevious]);
 
     return (
-        <div className="bg-gray-900 relative h-[500px] overflow-hidden">
+        <div className="bg-gray-900 relative h-[32rem] overflow-hidden">
             <div
                 ref={sliderRef}
                 className="flex h-full will-change-transform"
@@ -109,7 +102,7 @@ export default function Slider({ comics, selectedComic, onComicSelect, onOpenMod
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
             >
-                {sortedComics.map((comic, index) => (
+                {comics.map((comic, index) => (
                     <div
                         key={comic.id}
                         className="w-full h-full flex-shrink-0"
@@ -134,7 +127,7 @@ export default function Slider({ comics, selectedComic, onComicSelect, onOpenMod
 
             <button
                 onClick={goToNext}
-                disabled={currentIndex >= sortedComics.length - 1}
+                disabled={currentIndex >= comics.length - 1}
                 className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex items-center justify-center w-12 h-12 text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
