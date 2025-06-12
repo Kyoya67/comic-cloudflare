@@ -40,16 +40,14 @@ export default function MainDisplay() {
                 preloadRange={2}
             />
 
-            <div className="bg-white">
-                <Card
-                    id={selectedComic.id}
-                    title={selectedComic.title}
-                    updatedAt={selectedComic.updatedAt}
-                    imageUrl={selectedComic.imageUrl}
-                    order={selectedComic.order}
-                    main
-                />
-            </div>
+            <Card
+                id={selectedComic.id}
+                title={selectedComic.title}
+                updatedAt={selectedComic.updatedAt}
+                imageUrl={selectedComic.imageUrl}
+                order={selectedComic.order}
+                main
+            />
 
             <FullscreenView
                 comic={selectedComic}
