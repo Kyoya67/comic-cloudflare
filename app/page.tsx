@@ -6,9 +6,10 @@ export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const comics = await getComics();
+  const sortedComics = [...comics].sort((a, b) => b.order - a.order);
 
   return (
-    <ComicsProvider initialComics={comics}>
+    <ComicsProvider initialComics={sortedComics}>
       <Viewer />
     </ComicsProvider>
   );

@@ -19,10 +19,10 @@ export default function Viewer({ mainComicId }: ComicViewerProps) {
             if (targetComic) {
                 setSelectedComic(targetComic);
             } else {
-                setSelectedComic(comics[0]);
+                setSelectedComic(comics[comics.length - 1]);
             }
         } else if (comics.length > 0 && !selectedComic) {
-            setSelectedComic(comics[0]);
+            setSelectedComic(comics[comics.length - 1]);
         }
     }, [mainComicId, comics, selectedComic, setSelectedComic]);
 

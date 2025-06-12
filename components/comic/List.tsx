@@ -1,3 +1,5 @@
+'use client';
+
 import Card from './Card';
 import type { Comic } from '../../types/comic';
 
@@ -8,13 +10,11 @@ interface ComicListProps {
 }
 
 export default function List({ comics, selectedComicId, onComicSelect }: ComicListProps) {
-    const sortedComicsForList = [...comics].sort((a, b) => b.order - a.order);
-
     return (
         <div>
             <div className="border-b border-black mb-6"></div>
             <div className="bg-white">
-                {sortedComicsForList.map((comic) => {
+                {comics.map((comic) => {
                     const isSelected = comic.id === selectedComicId;
                     return (
                         <div

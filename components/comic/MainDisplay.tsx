@@ -6,6 +6,7 @@ import Card from './Card';
 import PreloadImages from '../PreloadImages';
 import FullscreenView from '../FullscreenView';
 import { useComics } from '../../context/ComicsContext';
+import type { Comic } from '../../types/comic';
 
 export default function MainDisplay() {
     const { comics, selectedComic, setSelectedComic } = useComics();
@@ -19,10 +20,9 @@ export default function MainDisplay() {
         );
     }
 
-    const sortedComics = [...comics].sort((a, b) => b.order - a.order);
-    const currentIndex = sortedComics.findIndex(comic => comic.id === selectedComic.id);
+    const currentIndex = comics.findIndex(comic => comic.id === selectedComic.id);
 
-    const handleComicSelect = (comic: any) => {
+    const handleComicSelect = (comic: Comic) => {
         setSelectedComic(comic);
     };
 
@@ -35,7 +35,7 @@ export default function MainDisplay() {
                 onOpenModal={() => setIsFullscreenOpen(true)}
             />
             <PreloadImages
-                comics={sortedComics}
+                comics={comics}
                 currentIndex={currentIndex}
                 preloadRange={2}
             />
@@ -53,7 +53,7 @@ export default function MainDisplay() {
 
             <FullscreenView
                 comic={selectedComic}
-                comics={sortedComics}
+                comics={comics}
                 currentIndex={currentIndex}
                 isOpen={isFullscreenOpen}
                 onClose={() => setIsFullscreenOpen(false)}
