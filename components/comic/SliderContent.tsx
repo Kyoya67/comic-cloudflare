@@ -8,7 +8,6 @@ interface SliderContentProps {
     isTransitioning: boolean;
     swipeHandlers: Record<string, any>;
     variant: 'fullscreen' | 'normal';
-    onClose?: () => void;
 }
 
 export default function SliderContent({
@@ -17,7 +16,6 @@ export default function SliderContent({
     isTransitioning,
     swipeHandlers,
     variant,
-    onClose
 }: SliderContentProps) {
     return (
         <div
@@ -32,10 +30,9 @@ export default function SliderContent({
                 <div
                     key={comic.id}
                     className={`w-full h-full flex-shrink-0 ${variant === 'fullscreen'
-                        ? 'flex items-center justify-center p-4 cursor-not-allowed'
+                        ? 'flex items-center justify-center p-4'
                         : ''
                         }`}
-                    onClick={variant === 'fullscreen' ? onClose : undefined}
                 >
                     {variant === 'fullscreen' ? (
                         comic.imageUrl && (
@@ -44,10 +41,9 @@ export default function SliderContent({
                                 alt={comic.title}
                                 width={1920}
                                 height={1080}
-                                className="max-w-full max-h-full object-contain"
+                                className="max-w-full max-h-full object-contain pointer-events-none"
                                 unoptimized
                                 priority
-                                onClick={(e) => e.stopPropagation()}
                             />
                         )
                     ) : (

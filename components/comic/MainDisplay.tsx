@@ -32,6 +32,7 @@ export default function MainDisplay() {
                 selectedComicId={selectedComic.id}
                 onComicSelect={handleComicSelect}
                 onOpenModal={() => setIsFullscreenOpen(true)}
+                disableKeyboard={isFullscreenOpen}
             />
             <PreloadImages
                 comics={comics}

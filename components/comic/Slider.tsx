@@ -16,9 +16,10 @@ export interface ComicSliderProps {
     onOpenModal?: () => void;
     isFullscreen?: boolean;
     onClose?: () => void;
+    disableKeyboard?: boolean;
 }
 
-export default function Slider({ comics, selectedComicId, onComicSelect, onOpenModal, isFullscreen = false, onClose }: ComicSliderProps) {
+export default function Slider({ comics, selectedComicId, onComicSelect, onOpenModal, isFullscreen = false, onClose, disableKeyboard = false }: ComicSliderProps) {
 
     const {
         currentIndex,
@@ -31,7 +32,7 @@ export default function Slider({ comics, selectedComicId, onComicSelect, onOpenM
         items: comics,
         selectedItemId: selectedComicId,
         onItemSelect: onComicSelect,
-        getItemId: (comic) => comic.id,
+        getItemId: (item) => item.id,
     });
 
     const swipeHandlers = useSwipeGesture({
@@ -42,8 +43,8 @@ export default function Slider({ comics, selectedComicId, onComicSelect, onOpenM
     useKeyboardNavigation({
         onPrevious: goToPrevious,
         onNext: goToNext,
-        onEscape: onClose,
-        isEnabled: true,
+        onEscape: isFullscreen ? onClose : undefined,
+        isEnabled: !disableKeyboard,
     });
 
     useFullscreenEffect(isFullscreen);
@@ -51,11 +52,6 @@ export default function Slider({ comics, selectedComicId, onComicSelect, onOpenM
     if (isFullscreen) {
         return (
             <div className="fixed inset-0 bg-gray-900 z-50">
-                <div
-                    className="absolute inset-0 z-10"
-                    onClick={onClose}
-                />
-
                 {onClose && <CloseButton onClick={onClose} />}
 
                 <NavigationButton
@@ -72,14 +68,13 @@ export default function Slider({ comics, selectedComicId, onComicSelect, onOpenM
                     variant="fullscreen"
                 />
 
-                <div className="w-full h-full overflow-hidden relative z-0">
+                <div className="w-full h-full overflow-hidden relative">
                     <SliderContent
                         comics={comics}
                         currentIndex={currentIndex}
                         isTransitioning={isTransitioning}
                         swipeHandlers={swipeHandlers}
                         variant="fullscreen"
-                        onClose={onClose}
                     />
                 </div>
             </div>
