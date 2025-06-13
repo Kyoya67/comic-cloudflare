@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import ActionButton from './ActionButton';
+import { ActionButton } from '../controls';
 
 interface SliderActionsProps {
     onOpenModal: () => void;

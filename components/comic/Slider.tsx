@@ -1,9 +1,8 @@
 'use client';
 
 import ImageSlide from './ImageSlide';
-import NavigationButton from './NavigationButton';
 import SliderActions from './SliderActions';
-import CloseButton from './CloseButton';
+import { NavigationButton, CloseButton } from '../controls';
 import type { Comic } from '../../types/comic';
 import Image from 'next/image';
 import { useSliderNavigation } from '../../hooks/useSliderNavigation';
