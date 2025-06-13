@@ -17,3 +17,13 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.hidden-mobile {
+  display: none;
+}
+
+@media (min-width: 500px) {
+  .hidden-mobile {
+    display: flex;
+  }
+}
