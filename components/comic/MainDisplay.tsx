@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Slider from './Slider';
 import Card from './Card';
 import PreloadImages from '../PreloadImages';
-import FullscreenView from '../FullscreenView';
 import { useComics } from '../../context/ComicsContext';
 import type { Comic } from '../../types/comic';
 
@@ -47,14 +46,15 @@ export default function MainDisplay() {
                 order={selectedComic.order}
                 main
             />
-            <FullscreenView
-                comic={selectedComic}
-                comics={comics}
-                currentIndex={currentIndex}
-                isOpen={isFullscreenOpen}
-                onClose={() => setIsFullscreenOpen(false)}
-                onComicSelect={handleComicSelect}
-            />
+            {isFullscreenOpen && (
+                <Slider
+                    comics={comics}
+                    selectedComicId={selectedComic.id}
+                    onComicSelect={handleComicSelect}
+                    isFullscreen={true}
+                    onClose={() => setIsFullscreenOpen(false)}
+                />
+            )}
         </>
     );
 } 

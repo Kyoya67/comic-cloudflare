@@ -1,106 +1,122 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import ImageSlide from './ImageSlide';
+import NavigationButton from './NavigationButton';
+import SliderActions from './SliderActions';
+import CloseButton from './CloseButton';
 import type { Comic } from '../../types/comic';
-import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { useSliderNavigation } from '../../hooks/useSliderNavigation';
+import { useSwipeGesture } from '../../hooks/useSwipeGesture';
+import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
+import { useFullscreenEffect } from '../../hooks/useFullscreenEffect';
 
-interface ComicSwiperProps {
+export interface ComicSliderProps {
     comics: Comic[];
     selectedComicId: string;
     onComicSelect: (comic: Comic) => void;
-    onOpenModal: () => void;
+    onOpenModal?: () => void;
+    isFullscreen?: boolean;
+    onClose?: () => void;
 }
 
-export default function Slider({ comics, selectedComicId, onComicSelect, onOpenModal }: ComicSwiperProps) {
-    const router = useRouter();
-    const [isTransitioning, setIsTransitioning] = useState(false);
-    const sliderRef = useRef<HTMLDivElement>(null);
-    const touchStartX = useRef(0);
-    const touchStartY = useRef(0);
-    const isDragging = useRef(false);
+export default function Slider({ comics, selectedComicId, onComicSelect, onOpenModal, isFullscreen = false, onClose }: ComicSliderProps) {
 
-    const currentIndex = useMemo(() =>
-        comics.findIndex(comic => comic.id === selectedComicId),
-        [comics, selectedComicId]
-    );
+    const {
+        currentIndex,
+        isTransitioning,
+        goToPrevious,
+        goToNext,
+        canGoPrevious,
+        canGoNext,
+    } = useSliderNavigation({
+        items: comics,
+        selectedItemId: selectedComicId,
+        onItemSelect: onComicSelect,
+        getItemId: (comic) => comic.id,
+    });
 
-    const goToSlide = useCallback((index: number) => {
-        if (index < 0 || index >= comics.length || isTransitioning) return;
+    const swipeHandlers = useSwipeGesture({
+        onSwipeLeft: goToNext,
+        onSwipeRight: goToPrevious,
+    });
 
-        setIsTransitioning(true);
-        onComicSelect(comics[index]);
+    useKeyboardNavigation({
+        onPrevious: goToPrevious,
+        onNext: goToNext,
+        onEscape: onClose,
+        isEnabled: true,
+    });
 
-        setTimeout(() => setIsTransitioning(false), 300);
-    }, [comics, onComicSelect, isTransitioning]);
+    useFullscreenEffect(isFullscreen);
 
-    const goToPrevious = useCallback(() => {
-        goToSlide(currentIndex - 1);
-    }, [currentIndex, goToSlide]);
+    if (isFullscreen) {
+        return (
+            <div className="fixed inset-0 bg-gray-900 z-50" {...swipeHandlers}>
+                <div
+                    className="absolute inset-0 z-10"
+                    onClick={onClose}
+                />
 
-    const goToNext = useCallback(() => {
-        goToSlide(currentIndex + 1);
-    }, [currentIndex, goToSlide]);
+                {onClose && <CloseButton onClick={onClose} />}
 
-    const handleTouchStart = (e: React.TouchEvent) => {
-        e.preventDefault();
-        touchStartX.current = e.touches[0].clientX;
-        touchStartY.current = e.touches[0].clientY;
-        isDragging.current = true;
-    };
+                <NavigationButton
+                    direction="left"
+                    onClick={goToPrevious}
+                    disabled={!canGoPrevious}
+                    variant="fullscreen"
+                />
 
-    const handleTouchMove = (e: React.TouchEvent) => {
-        if (!isDragging.current) return;
-        e.preventDefault();
-    };
+                <NavigationButton
+                    direction="right"
+                    onClick={goToNext}
+                    disabled={!canGoNext}
+                    variant="fullscreen"
+                />
 
-    const handleTouchEnd = (e: React.TouchEvent) => {
-        if (!isDragging.current) return;
-
-        const touchEndX = e.changedTouches[0].clientX;
-        const touchEndY = e.changedTouches[0].clientY;
-        const diffX = touchStartX.current - touchEndX;
-        const diffY = Math.abs(touchStartY.current - touchEndY);
-
-        if (Math.abs(diffX) > 30 && diffY < 150) {
-            if (diffX > 0) {
-                goToNext();
-            } else {
-                goToPrevious();
-            }
-        }
-
-        isDragging.current = false;
-    };
-
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            switch (e.key) {
-                case 'ArrowLeft':
-                    goToPrevious();
-                    break;
-                case 'ArrowRight':
-                    goToNext();
-                    break;
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [goToNext, goToPrevious]);
+                <div className="w-full h-full overflow-hidden relative z-0">
+                    <div
+                        className="flex h-full will-change-transform"
+                        style={{
+                            transform: `translateX(-${currentIndex * 100}%)`,
+                            transition: isTransitioning ? 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
+                        }}
+                    >
+                        {comics.map((comic) => (
+                            <div
+                                key={comic.id}
+                                className="w-full h-full flex-shrink-0 flex items-center justify-center p-4 cursor-not-allowed"
+                                onClick={onClose}
+                            >
+                                {comic.imageUrl && (
+                                    <Image
+                                        src={`/api/image/${comic.imageUrl}`}
+                                        alt={comic.title}
+                                        width={1920}
+                                        height={1080}
+                                        className="max-w-full max-h-full object-contain"
+                                        unoptimized
+                                        priority
+                                        onClick={(e) => e.stopPropagation()}
+                                    />
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-gray-900 relative h-[32rem] overflow-hidden">
             <div
-                ref={sliderRef}
                 className="flex h-full will-change-transform"
                 style={{
                     transform: `translateX(-${currentIndex * 100}%)`,
                     transition: isTransitioning ? 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
                 }}
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
+                {...swipeHandlers}
             >
                 {comics.map((comic, index) => (
                     <div
@@ -115,49 +131,23 @@ export default function Slider({ comics, selectedComicId, onComicSelect, onOpenM
                 ))}
             </div>
 
-            <button
+            <NavigationButton
+                direction="left"
                 onClick={goToPrevious}
-                disabled={currentIndex <= 0}
-                className="absolute left-4 top-1/2 -translate-y-1/2 hidden md:flex items-center justify-center w-12 h-12 text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-            >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
+                disabled={!canGoPrevious}
+                variant="normal"
+            />
 
-            <button
+            <NavigationButton
+                direction="right"
                 onClick={goToNext}
-                disabled={currentIndex >= comics.length - 1}
-                className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex items-center justify-center w-12 h-12 text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-            >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
+                disabled={!canGoNext}
+                variant="normal"
+            />
 
-            <div className="absolute bottom-4 right-4 z-10 flex flex-col sm:flex-row gap-2">
-                <button
-                    onClick={onOpenModal}
-                    className="flex items-center justify-center sm:gap-2 px-2 sm:px-3 py-2 bg-gray-800 bg-opacity-80 hover:bg-opacity-90 text-white text-xs sm:text-sm font-medium border border-gray-600 transition-all"
-                >
-                    <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" strokeWidth={2} />
-                        <path strokeWidth={2} d="M9 9h6v6H9z" />
-                    </svg>
-                    <span className="hidden sm:inline">全画面</span>
-                </button>
-                <button
-                    onClick={() => {
-                        router.push('/admin');
-                    }}
-                    className="flex items-center justify-center sm:gap-2 px-2 sm:px-3 py-2 bg-gray-800 bg-opacity-80 hover:bg-opacity-90 text-white text-xs sm:text-sm font-medium border border-gray-600 transition-all"
-                >
-                    <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
-                    </svg>
-                    <span className="hidden sm:inline">管理画面</span>
-                </button>
-            </div>
+            {onOpenModal && (
+                <SliderActions onOpenModal={onOpenModal} />
+            )}
         </div>
     );
 } 
