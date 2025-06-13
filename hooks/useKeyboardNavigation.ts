@@ -11,11 +11,8 @@ export function useKeyboardNavigation({
     onPrevious,
     onNext,
     onEscape,
-    isEnabled = true
 }: UseKeyboardNavigationProps) {
     useEffect(() => {
-        if (!isEnabled) return;
-
         let isKeyPressed = false;
 
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -54,5 +51,5 @@ export function useKeyboardNavigation({
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
         };
-    }, [onPrevious, onNext, onEscape, isEnabled]);
+    }, [onPrevious, onNext, onEscape]);
 } 

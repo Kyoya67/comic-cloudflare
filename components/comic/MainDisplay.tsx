@@ -27,25 +27,28 @@ export default function MainDisplay() {
 
     return (
         <>
-            <Slider
-                comics={comics}
-                selectedComicId={selectedComic.id}
-                onComicSelect={handleComicSelect}
-                onOpen={() => setIsFullscreenOpen(true)}
-                disableKeyboard={isFullscreenOpen}
-            />
+            {!isFullscreenOpen && (
+                <>
+                    <Slider
+                        comics={comics}
+                        selectedComicId={selectedComic.id}
+                        onComicSelect={handleComicSelect}
+                        onOpen={() => setIsFullscreenOpen(true)}
+                    />
+                    <Card
+                        id={selectedComic.id}
+                        title={selectedComic.title}
+                        updatedAt={selectedComic.updatedAt}
+                        imageUrl={selectedComic.imageUrl}
+                        order={selectedComic.order}
+                        main
+                    />
+                </>
+            )}
             <PreloadImages
                 comics={comics}
                 currentIndex={currentIndex}
                 preloadRange={2}
-            />
-            <Card
-                id={selectedComic.id}
-                title={selectedComic.title}
-                updatedAt={selectedComic.updatedAt}
-                imageUrl={selectedComic.imageUrl}
-                order={selectedComic.order}
-                main
             />
             {isFullscreenOpen && (
                 <Slider

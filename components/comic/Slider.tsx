@@ -16,7 +16,6 @@ export interface ComicSliderProps {
     isFullscreen?: boolean;
     onOpen?: () => void;
     onClose?: () => void;
-    disableKeyboard?: boolean;
 }
 
 export default function Slider({
@@ -26,7 +25,6 @@ export default function Slider({
     isFullscreen = false,
     onOpen,
     onClose,
-    disableKeyboard = false
 }: ComicSliderProps) {
 
     const {
@@ -52,7 +50,6 @@ export default function Slider({
         onPrevious: goToPrevious,
         onNext: goToNext,
         onEscape: isFullscreen ? onClose : undefined,
-        isEnabled: !disableKeyboard,
     });
 
     useFullscreenEffect(isFullscreen);
