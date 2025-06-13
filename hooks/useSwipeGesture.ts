@@ -18,7 +18,6 @@ export function useSwipeGesture({
     const isDragging = useRef(false);
 
     const handleTouchStart = (e: React.TouchEvent) => {
-        e.preventDefault();
         touchStartX.current = e.touches[0].clientX;
         touchStartY.current = e.touches[0].clientY;
         isDragging.current = true;
