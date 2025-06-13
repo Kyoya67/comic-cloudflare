@@ -7,11 +7,15 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 const app = new Hono().basePath("/api");
 
+function getDatabase() {
+    return drizzle(
+        (getCloudflareContext().env as any).DB as unknown as D1Database
+    );
+}
+
 app.get("/comics", async (c) => {
     try {
-        const db = drizzle(
-            (getCloudflareContext().env as any).DB as unknown as D1Database
-        );
+        const db = getDatabase();
         const comicsResponse = await db.select().from(comics);
         return c.json(comicsResponse);
     } catch (error) {
@@ -74,9 +78,7 @@ app.post("/upload", async (c) => {
         return c.json({ success: false, message: 'R2 not found', error: r2Error }, 500);
     }
 
-    const db = drizzle(
-        (getCloudflareContext().env as any).DB as unknown as D1Database
-    );
+    const db = getDatabase();
 
     const result = await db
         .select({ maxOrder: sql`MAX("order")` })
