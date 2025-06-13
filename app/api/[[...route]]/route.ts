@@ -7,10 +7,15 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 const app = new Hono().basePath("/api");
 
+let memoizedDb: ReturnType<typeof drizzle> | null = null;
+
 function getDatabase() {
-    return drizzle(
-        (getCloudflareContext().env as any).DB as unknown as D1Database
-    );
+    if (!memoizedDb) {
+        memoizedDb = drizzle(
+            (getCloudflareContext().env as any).DB as unknown as D1Database
+        );
+    }
+    return memoizedDb;
 }
 
 app.get("/comics", async (c) => {
