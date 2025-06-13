@@ -2,7 +2,7 @@
 
 import SliderActions from './SliderActions';
 import SliderContent from './SliderContent';
-import { NavigationButton, CloseButton } from '../controls';
+import { NavigationButton } from '../controls';
 import type { Comic } from '../../types/comic';
 import { useSliderNavigation } from '../../hooks/useSliderNavigation';
 import { useSwipeGesture } from '../../hooks/useSwipeGesture';
@@ -13,13 +13,21 @@ export interface ComicSliderProps {
     comics: Comic[];
     selectedComicId: string;
     onComicSelect: (comic: Comic) => void;
-    onOpenModal?: () => void;
     isFullscreen?: boolean;
+    onOpen?: () => void;
     onClose?: () => void;
     disableKeyboard?: boolean;
 }
 
-export default function Slider({ comics, selectedComicId, onComicSelect, onOpenModal, isFullscreen = false, onClose, disableKeyboard = false }: ComicSliderProps) {
+export default function Slider({
+    comics,
+    selectedComicId,
+    onComicSelect,
+    isFullscreen = false,
+    onOpen,
+    onClose,
+    disableKeyboard = false
+}: ComicSliderProps) {
 
     const {
         currentIndex,
@@ -51,8 +59,7 @@ export default function Slider({ comics, selectedComicId, onComicSelect, onOpenM
 
     if (isFullscreen) {
         return (
-            <div className="fixed inset-0 bg-gray-900 z-50">
-                {onClose && <CloseButton onClick={onClose} />}
+            <div className="fixed inset-0 bg-gray-900 z-50" onClick={onClose}>
 
                 <NavigationButton
                     direction="left"
@@ -105,8 +112,8 @@ export default function Slider({ comics, selectedComicId, onComicSelect, onOpenM
                 variant="normal"
             />
 
-            {onOpenModal && (
-                <SliderActions onOpenModal={onOpenModal} />
+            {onOpen && (
+                <SliderActions onOpenModal={onOpen} />
             )}
         </div>
     );

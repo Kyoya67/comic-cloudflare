@@ -49,8 +49,8 @@ export function useSwipeGesture({
     };
 
     return {
-        handleTouchStart,
-        handleTouchMove,
-        handleTouchEnd,
+        onTouchStart: handleTouchStart,
+        onTouchMove: handleTouchMove,
+        onTouchEnd: handleTouchEnd,
     };
 } 
