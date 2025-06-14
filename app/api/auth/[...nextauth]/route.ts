@@ -21,6 +21,9 @@ const handler = NextAuth({
     },
     callbacks: {
         async signIn({ account, profile }) {
+            if (!process.env.ADMIN_GITHUB_USERNAME) {
+                throw new Error("Environment variable ADMIN_GITHUB_USERNAME is not defined.");
+            }
             const allowedUsers = [
                 process.env.ADMIN_GITHUB_USERNAME,
             ];
