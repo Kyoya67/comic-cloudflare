@@ -27,6 +27,7 @@ export default function NavigationButton({
 
     return (
         <button
+            type="button"
             onClick={onClick}
             disabled={disabled}
             className={combinedClasses}

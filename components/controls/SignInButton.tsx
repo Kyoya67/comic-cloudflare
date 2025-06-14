@@ -77,6 +77,7 @@ export default function SignInButton({
     return (
         <div className="w-full">
             <button
+                type="button"
                 onClick={handleSignIn}
                 disabled={isLoading}
                 className={`w-full flex items-center justify-center gap-3 bg-gray-900 hover:bg-gray-700 disabled:bg-gray-600 text-white px-6 py-3 font-medium transition-all duration-200 border border-gray-600 hover:border-gray-500 ${className}`}

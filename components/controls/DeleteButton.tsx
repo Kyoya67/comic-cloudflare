@@ -6,6 +6,7 @@ interface DeleteButtonProps {
 export default function DeleteButton({ onClick, className = '' }: DeleteButtonProps) {
     return (
         <button
+            type="button"
             onClick={onClick}
             className={`text-red-500 hover:text-red-600 transition-colors ${className}`}
         >

@@ -27,6 +27,7 @@ export default function BackButton({
 
     return (
         <button
+            type="button"
             onClick={handleClick}
             className={`text-gray-400 hover:text-white transition-colors text-sm ${className}`}
         >
