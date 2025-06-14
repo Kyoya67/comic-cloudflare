@@ -67,6 +67,7 @@ export default function NewComicPage() {
                     </div>
                     <AdminButton
                         type="submit"
+                        size="sm"
                         className="w-full sm:w-auto"
                     >
                         アップロード
