@@ -17,7 +17,6 @@ export default function ComicActionButtons({
         if (onEdit) {
             onEdit(comicId);
         } else {
-            // TODO: 編集機能の実装
             console.log('Edit comic:', comicId);
         }
     };
@@ -26,7 +25,6 @@ export default function ComicActionButtons({
         if (onDelete) {
             onDelete(comicId);
         } else {
-            // TODO: 削除機能の実装
             console.log('Delete comic:', comicId);
         }
     };
