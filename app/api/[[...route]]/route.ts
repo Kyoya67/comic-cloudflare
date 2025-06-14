@@ -50,7 +50,6 @@ app.get("/image/:filename", async (c) => {
             'ETag': object.httpEtag || '',
         });
 
-        // ETag check for 304 Not Modified
         const ifNoneMatch = c.req.header('If-None-Match');
         if (ifNoneMatch && ifNoneMatch === object.httpEtag) {
             return new Response(null, { status: 304, headers });

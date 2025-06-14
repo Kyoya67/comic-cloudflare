@@ -1,15 +1,33 @@
 export const dynamic = 'force-dynamic';
 
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
 import Card from '../../components/comic/Card';
 import AdminHeader from '../../components/AdminHeader';
+import { ComicActionButtons } from '../../components/controls';
 import { getComics } from '../../lib/getComics';
 import type { Comic } from '../../types/comic';
 
 export default async function AdminPage() {
+    const session = await getServerSession();
+
+    if (!session) {
+        redirect('/api/auth/signin');
+    }
+
     const comics: Comic[] = await getComics();
+
     return (
         <div className="min-h-screen bg-gray-900">
             <AdminHeader />
+
+            <div className="bg-gray-800 p-4 mb-6">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <p className="text-white">
+                        管理者: {session.user?.name} ({session.user?.email})
+                    </p>
+                </div>
+            </div>
 
             <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -22,10 +40,7 @@ export default async function AdminPage() {
                                 imageUrl={comic.imageUrl}
                                 order={comic.order}
                             />
-                            <div className="absolute bottom-4 right-4 flex space-x-2 z-10">
-                                <button className="text-blue-500 hover:text-blue-600">編集</button>
-                                <button className="text-red-500 hover:text-red-600">削除</button>
-                            </div>
+                            <ComicActionButtons comicId={comic.id} />
                         </div>
                     ))}
                 </div>

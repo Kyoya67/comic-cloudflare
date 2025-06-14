@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic';
 import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import AdminHeader from '../../../components/AdminHeader';
+import { AdminButton } from '../../../components/controls';
 
 import { uploadComic } from '../../../lib/uploadComic';
 
@@ -64,12 +65,12 @@ export default function NewComicPage() {
                             <p className="text-sm sm:text-base">ここに画像をドラッグ＆ドロップ、またはクリックして選択</p>
                         )}
                     </div>
-                    <button
+                    <AdminButton
                         type="submit"
-                        className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-3 sm:py-2 bg-gray-800 text-white text-sm sm:text-base font-medium border border-gray-600 hover:bg-gray-700 transition-all rounded"
+                        className="w-full sm:w-auto"
                     >
                         アップロード
-                    </button>
+                    </AdminButton>
                 </form>
             </main>
         </div>
