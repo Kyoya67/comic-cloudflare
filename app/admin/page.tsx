@@ -12,7 +12,7 @@ export default async function AdminPage() {
     const session = await getServerSession();
 
     if (!session) {
-        redirect('/api/auth/signin');
+        redirect('/auth/signin');
     }
 
     const comics: Comic[] = await getComics();
