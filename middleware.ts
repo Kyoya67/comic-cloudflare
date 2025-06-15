@@ -1,17 +1,18 @@
-import { withAuth } from "next-auth/middleware";
+import { auth } from "./auth"
 
-export default withAuth(
-    {
-        callbacks: {
-            authorized: ({ token, req }) => {
-                if (req.nextUrl.pathname.startsWith("/admin")) {
-                    return !!token;
-                }
-                return true;
-            },
-        },
+export default auth((req) => {
+    const { nextUrl } = req;
+    const isAuthenticated = !!req.auth;
+
+    // /adminパスで認証が必要
+    if (nextUrl.pathname.startsWith("/admin")) {
+        if (!isAuthenticated) {
+            return Response.redirect(new URL('/auth/signin', nextUrl));
+        }
     }
-);
+
+    return;
+});
 
 export const config = {
     matcher: ["/admin/:path*"]

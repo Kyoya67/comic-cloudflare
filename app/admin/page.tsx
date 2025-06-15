@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 
-import { getServerSession } from "next-auth/next";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import Card from '../../components/comic/Card';
 import AdminHeader from '../../components/AdminHeader';
@@ -9,7 +9,7 @@ import { getComics } from '../../lib/getComics';
 import type { Comic } from '../../types/comic';
 
 export default async function AdminPage() {
-    const session = await getServerSession();
+    const session = await auth();
 
     if (!session) {
         redirect('/auth/signin');
