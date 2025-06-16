@@ -19,15 +19,15 @@ export default function AdminHeader({ showAddButton = true }: AdminHeaderProps) 
                     </h1>
                     <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
                         {showAddButton ? (
-                            <AdminButton href="/admin/add" size="sm">
+                            <AdminButton href="/admin/add">
                                 新規追加
                             </AdminButton>
                         ) : (
-                            <AdminButton href="/admin" size="sm">
+                            <AdminButton href="/admin">
                                 管理画面に戻る
                             </AdminButton>
                         )}
-                        <AdminButton href="/" size="sm">
+                        <AdminButton href="/">
                             トップに戻る
                         </AdminButton>
                         <SignOutButton />
