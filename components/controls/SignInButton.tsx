@@ -40,13 +40,13 @@ export default function SignInButton({
                 router.push('/admin');
                 onSignInComplete?.();
             } else if (result?.error) {
-                const errorMessage = 'お前管理者じゃないだろ';
+                const errorMessage = '管理者権限がありません';
                 console.error('サインインエラー:', result.error);
                 setError(errorMessage);
                 onSignInError?.(result.error);
             }
         } catch (error) {
-            const errorMessage = 'お前管理者じゃないだろ';
+            const errorMessage = '管理者権限がありません';
             console.error('サインインエラー:', error);
             setError(errorMessage);
             onSignInError?.(error);
