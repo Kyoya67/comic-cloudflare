@@ -26,6 +26,7 @@ export default function SignOutButton({ callbackUrl = '/', className = '' }: Sig
                 router.push(callbackUrl);
             }
         } catch (error) {
+            console.error(error);
             router.push(callbackUrl);
         }
     };
