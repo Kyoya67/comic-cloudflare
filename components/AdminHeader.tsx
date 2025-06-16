@@ -1,6 +1,6 @@
 'use client';
 
-import { AdminButton, SignOutButton } from './controls';
+import { Button, SignOutButton } from './controls';
 
 interface AdminHeaderProps {
     showAddButton?: boolean;
@@ -19,17 +19,17 @@ export default function AdminHeader({ showAddButton = true }: AdminHeaderProps) 
                     </h1>
                     <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
                         {showAddButton ? (
-                            <AdminButton href="/admin/add">
+                            <Button href="/admin/add">
                                 新規追加
-                            </AdminButton>
+                            </Button>
                         ) : (
-                            <AdminButton href="/admin">
+                            <Button href="/admin">
                                 管理画面に戻る
-                            </AdminButton>
+                            </Button>
                         )}
-                        <AdminButton href="/">
+                        <Button href="/">
                             トップに戻る
-                        </AdminButton>
+                        </Button>
                         <SignOutButton />
                     </div>
                 </div>

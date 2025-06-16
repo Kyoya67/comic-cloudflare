@@ -1,6 +1,4 @@
-export { default as ActionButton } from './ActionButton';
-export { default as AdminButton } from './AdminButton';
-export { default as BackButton } from './BackButton';
+export { default as Button } from './Button';
 export { default as ComicActionButtons } from './ComicActionButtons';
 export { default as DeleteButton } from './DeleteButton';
 export { default as EditButton } from './EditButton';

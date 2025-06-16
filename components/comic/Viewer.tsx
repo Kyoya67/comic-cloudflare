@@ -32,8 +32,11 @@ export default function Viewer({ mainComicId }: ComicViewerProps) {
 
     if (!selectedComic) {
         return (
-            <div className="bg-gray-100 flex items-center justify-center min-h-screen">
-                <div className="text-lg">読み込み中...</div>
+            <div className="bg-gray-900 flex items-center justify-center min-h-screen">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <div className="text-lg text-white">読み込み中...</div>
+                </div>
             </div>
         );
     }
