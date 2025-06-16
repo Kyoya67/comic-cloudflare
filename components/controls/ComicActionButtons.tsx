@@ -17,7 +17,7 @@ export default function ComicActionButtons({
         if (onEdit) {
             onEdit(comicId);
         } else {
-            console.log('Edit comic:', comicId);
+            console.warn('Edit comic fallback triggered for comicId:', comicId);
         }
     };
 
