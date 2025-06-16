@@ -27,7 +27,7 @@ export default function SignIn() {
                             Real Fight
                         </h1>
                         <p className="text-gray-400">
-                            チョーヤ専用ログイン
+                            管理者専用ログイン
                         </p>
                     </div>
 
@@ -35,7 +35,7 @@ export default function SignIn() {
 
                     <div className="mt-6 text-center">
                         <p className="text-sm text-gray-500">
-                            チョーヤのみアクセス可能
+                            管理者のみアクセス可能
                         </p>
                     </div>
                 </div>

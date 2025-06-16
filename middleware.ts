@@ -1,18 +1,8 @@
-import { auth } from "./auth"
+import NextAuth from "next-auth";
+import authConfig from "./auth.config";
 
-export default auth((req) => {
-    const { nextUrl } = req;
-    const isAuthenticated = !!req.auth;
-
-    // /adminパスで認証が必要
-    if (nextUrl.pathname.startsWith("/admin")) {
-        if (!isAuthenticated) {
-            return Response.redirect(new URL('/auth/signin', nextUrl));
-        }
-    }
-
-    return;
-});
+export const { auth } = NextAuth(authConfig);
+export default auth;
 
 export const config = {
     matcher: ["/admin/:path*"]

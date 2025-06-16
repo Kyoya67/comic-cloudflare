@@ -6,7 +6,6 @@ import { useState } from 'react';
 
 interface SignInButtonProps {
     provider?: string;
-    callbackUrl?: string;
     className?: string;
     onSignInStart?: () => void;
     onSignInComplete?: () => void;
@@ -16,7 +15,6 @@ interface SignInButtonProps {
 
 export default function SignInButton({
     provider = 'github',
-    callbackUrl = '/',
     className = '',
     onSignInStart,
     onSignInComplete,
@@ -29,29 +27,26 @@ export default function SignInButton({
 
     const handleSignIn = async () => {
         setIsLoading(true);
-        setError(null); // エラーをクリア
+        setError(null);
         onSignInStart?.();
 
         try {
             const result = await signIn(provider, {
-                callbackUrl,
+                callbackUrl: '/',
                 redirect: false
             });
 
-            if (result?.url) {
-                router.push(result.url);
-            } else if (result?.ok) {
-                router.push(callbackUrl);
+            if (result?.ok && !result.error) {
+                router.push('/admin');
+                onSignInComplete?.();
             } else if (result?.error) {
-                const errorMessage = 'お前チョーヤじゃないだろ';
+                const errorMessage = 'お前管理者じゃないだろ';
                 console.error('サインインエラー:', result.error);
                 setError(errorMessage);
                 onSignInError?.(result.error);
             }
-
-            onSignInComplete?.();
         } catch (error) {
-            const errorMessage = 'お前チョーヤじゃないだろ';
+            const errorMessage = 'お前管理者じゃないだろ';
             console.error('サインインエラー:', error);
             setError(errorMessage);
             onSignInError?.(error);

@@ -12,7 +12,7 @@ interface BackButtonProps {
 export default function BackButton({
     href = '/',
     onClick,
-    children = '← 帰れ',
+    children = '← トップページに戻る',
     className = ''
 }: BackButtonProps) {
     const router = useRouter();
