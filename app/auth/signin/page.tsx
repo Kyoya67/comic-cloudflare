@@ -12,13 +12,7 @@ export default function SignIn() {
                         </p>
                     </div>
 
-                    <SignInButton />
-
-                    <div className="mt-6 text-center">
-                        <p className="text-sm text-gray-500">
-                            管理者のみアクセス可能
-                        </p>
-                    </div>
+                    <SignInButton provider="github" />
                 </div>
 
                 <div className="mt-6 text-center">
