@@ -1,12 +1,22 @@
 export const dynamic = 'force-dynamic';
 
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 import Card from '../../components/comic/Card';
 import AdminHeader from '../../components/AdminHeader';
+import { ComicActionButtons } from '../../components/controls';
 import { getComics } from '../../lib/getComics';
 import type { Comic } from '../../types/comic';
 
 export default async function AdminPage() {
+    const session = await auth();
+
+    if (!session) {
+        redirect('/auth/signin');
+    }
+
     const comics: Comic[] = await getComics();
+
     return (
         <div className="min-h-screen bg-gray-900">
             <AdminHeader />
@@ -22,10 +32,7 @@ export default async function AdminPage() {
                                 imageUrl={comic.imageUrl}
                                 order={comic.order}
                             />
-                            <div className="absolute bottom-4 right-4 flex space-x-2 z-10">
-                                <button className="text-blue-500 hover:text-blue-600">編集</button>
-                                <button className="text-red-500 hover:text-red-600">削除</button>
-                            </div>
+                            <ComicActionButtons comicId={comic.id} />
                         </div>
                     ))}
                 </div>

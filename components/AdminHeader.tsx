@@ -1,4 +1,6 @@
-import Link from 'next/link';
+'use client';
+
+import { AdminButton, SignOutButton } from './controls';
 
 interface AdminHeaderProps {
     showAddButton?: boolean;
@@ -17,26 +19,18 @@ export default function AdminHeader({ showAddButton = true }: AdminHeaderProps) 
                     </h1>
                     <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
                         {showAddButton ? (
-                            <Link
-                                href="/admin/add"
-                                className="flex items-center justify-center gap-2 px-3 py-2 bg-gray-800 text-white text-sm font-medium border border-gray-600 hover:bg-gray-700 transition-all"
-                            >
+                            <AdminButton href="/admin/add">
                                 新規追加
-                            </Link>
+                            </AdminButton>
                         ) : (
-                            <Link
-                                href="/admin"
-                                className="flex items-center justify-center gap-2 px-3 py-2 bg-gray-800 text-white text-sm font-medium border border-gray-600 hover:bg-gray-700 transition-all"
-                            >
+                            <AdminButton href="/admin">
                                 管理画面に戻る
-                            </Link>
+                            </AdminButton>
                         )}
-                        <Link
-                            href="/"
-                            className="flex items-center justify-center gap-2 px-3 py-2 bg-gray-800 text-white text-sm font-medium border border-gray-600 hover:bg-gray-700 transition-all"
-                        >
+                        <AdminButton href="/">
                             トップに戻る
-                        </Link>
+                        </AdminButton>
+                        <SignOutButton />
                     </div>
                 </div>
             </div>
