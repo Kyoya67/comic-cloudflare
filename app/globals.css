@@ -13,8 +13,8 @@
 }
 
 html, body {
+  overscroll-behavior: none;
   overflow-x: hidden;
-  background-color: #111827;
 }
 
 body {
