@@ -23,7 +23,7 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 
 ### 📖 漫画閲覧機能
 
-<img src="public/comic.png" alt="漫画閲覧画面" width="60%">
+<img src="public/comic.png" alt="漫画閲覧画面" width="60%" style="border: 2px solid rgba(0, 0, 0, 0.1);">
 
 **モダンなリーダー体験**
 
@@ -34,9 +34,11 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 - **画像プリロード**: 次ページの先読みによるスムーズな遷移
 - **SSR対応**: 初回表示の高速化とSEO最適化
 
+<br>
+
 ### 💬 コメント機能
 
-<img src="public/comment.png" alt="コメント機能" width="60%">
+<img src="public/comment.png" alt="コメント機能" width="60%" style="border: 2px solid rgba(0, 0, 0, 0.1);">
 
 **リアルタイムなコミュニケーション**
 
@@ -45,6 +47,8 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 - **ナビゲーションタブ**: 漫画一覧⇄コメント間のスムーズな切り替え
 - **即座更新**: 投稿後のリアルタイム画面更新
 - **文字数制限**: 500文字までの適切な制限設定
+
+<br>
 
 ### 🔐 認証・管理システム
 
@@ -55,6 +59,8 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 - **GitHub OAuth**: NextAuth v5による安全な認証システム
 - **管理者制限**: 環境変数ベースの柔軟なアクセス制御
 
+<br>
+
 <img src="public/admin.png" alt="管理画面" width="60%">
 
 **コンテンツ管理**
@@ -62,12 +68,16 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 - **漫画アップロード**: 管理者による新規コンテンツ追加
 - **順序管理**: ドラッグ&ドロップでの表示順序調整
 
+<br>
+
 <img src="public/adminAdd.png" alt="アップロード機能" width="60%">
 
 **直感的なファイル操作**
 
 - **ドラッグ&ドロップ**: React Dropzoneによる現代的なUI
 - **プログレス表示**: アップロード状況のリアルタイム表示
+
+<br>
 
 ### ⚡ パフォーマンス最適化
 
