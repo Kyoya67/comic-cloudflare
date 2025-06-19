@@ -20,7 +20,7 @@ export default function CommentList({ comments, loading }: CommentListProps) {
     if (comments.length === 0) {
         return (
             <div className="text-center py-8 text-gray-500">
-                まだコメントがありません。最初のコメントを投稿してみませんか？
+                まだコメントがありません。
             </div>
         );
     }

@@ -45,12 +45,14 @@ export default function CommentSection({ comicId, className }: CommentSectionPro
     };
 
     return (
-        <div className={`bg-white border-t border-gray-400 p-4 ${className}`}>
-            <h3 className="text-lg font-semibold mb-4">コメント ({comments.length})</h3>
+        <div className="bg-white border-t border-gray-400 p-4">
+            <div className={`${className}`}>
+                <h3 className="text-lg font-semibold mb-4">コメント ({comments.length})</h3>
 
-            <CommentForm onSubmit={handleCommentSubmit} isPosting={posting} />
+                <CommentForm onSubmit={handleCommentSubmit} isPosting={posting} />
 
-            <CommentList comments={comments} loading={loading} />
+                <CommentList comments={comments} loading={loading} />
+            </div>
         </div>
     );
 } 
