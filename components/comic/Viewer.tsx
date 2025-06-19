@@ -31,7 +31,6 @@ export default function Viewer({ mainComicId }: ComicViewerProps) {
 
     const handleComicSelect = (comic: Comic) => {
         setSelectedComic(comic);
-        setActiveTab('list'); // コミック切り替え時はリスト表示に戻る
     };
 
     const handleTabChange = (tab: 'list' | 'comments') => {
