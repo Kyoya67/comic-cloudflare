@@ -23,7 +23,7 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 
 ### 📖 漫画閲覧機能
 
-<img src="public/comic.png" alt="漫画閲覧画面" width="60%" style="border: 2px solid rgba(0, 0, 0, 0.1);">
+<img src="public/comic.png" alt="漫画閲覧画面" width="60%" style="border: 2px solid #e5e7eb；">
 
 **モダンなリーダー体験**
 
@@ -38,7 +38,7 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 
 ### 💬 コメント機能
 
-<img src="public/comment.png" alt="コメント機能" width="60%" style="border: 2px solid rgba(0, 0, 0, 0.1);">
+<img src="public/comment.png" alt="コメント機能" width="60%" style="border: 2px solid #e5e7eb;">
 
 **リアルタイムなコミュニケーション**
 
