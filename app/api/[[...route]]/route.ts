@@ -1,9 +1,10 @@
-import { comics } from "@/db/schema";
-import { sql, eq } from "drizzle-orm";
+import { comics, comments } from "@/db/schema";
+import { sql, eq, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { randomUUID } from "crypto";
 
 const app = new Hono().basePath("/api");
 
@@ -26,6 +27,49 @@ app.get("/comics", async (c) => {
     } catch (error) {
         console.error('DB not found in getComics', error);
         return c.json({ success: false, message: 'DB not found', error: error }, 500);
+    }
+});
+
+app.get("/comics/:comicId/comments", async (c) => {
+    const comicId = c.req.param('comicId');
+
+    try {
+        const db = getDatabase();
+        const commentsResponse = await db.select()
+            .from(comments)
+            .where(eq(comments.comicId, comicId))
+            .orderBy(desc(comments.createdAt));
+
+        return c.json(commentsResponse);
+    } catch (error) {
+        console.error('Failed to fetch comments', error);
+        return c.json({ success: false, message: 'Failed to fetch comments', error: error }, 500);
+    }
+});
+
+app.post("/comics/:comicId/comments", async (c) => {
+    const comicId = c.req.param('comicId');
+
+    try {
+        const { content } = await c.req.json();
+
+        if (!content || content.trim() === '') {
+            return c.json({ success: false, message: 'Content is required' }, 400);
+        }
+
+        const db = getDatabase();
+
+        await db.insert(comments).values({
+            id: randomUUID(),
+            comicId: comicId,
+            content: content.trim(),
+            createdAt: new Date().toISOString(),
+        });
+
+        return c.json({ success: true, message: 'Comment posted successfully' });
+    } catch (error) {
+        console.error('Failed to post comment', error);
+        return c.json({ success: false, message: 'Failed to post comment', error: error }, 500);
     }
 });
 

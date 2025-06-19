@@ -15,6 +15,13 @@
       "when": 1749455640192,
       "tag": "0001_fancy_ben_urich",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1750312057315,
+      "tag": "0002_workable_reaper",
+      "breakpoints": true
     }
   ]
 }
