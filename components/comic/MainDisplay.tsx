@@ -4,11 +4,15 @@ import { useState } from 'react';
 import Slider from './Slider';
 import Card from './Card';
 import PreloadImages from '../PreloadImages';
-import { useComics } from '../../context/ComicsContext';
 import type { Comic } from '../../types/comic';
 
-export default function MainDisplay() {
-    const { comics, selectedComic, setSelectedComic } = useComics();
+interface MainDisplayProps {
+    comics: Comic[];
+    selectedComic: Comic;
+    onComicSelect: (comic: Comic) => void;
+}
+
+export default function MainDisplay({ comics, selectedComic, onComicSelect }: MainDisplayProps) {
     const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
 
     if (!selectedComic) {
@@ -22,7 +26,7 @@ export default function MainDisplay() {
     const currentIndex = comics.findIndex(comic => comic.id === selectedComic.id);
 
     const handleComicSelect = (comic: Comic) => {
-        setSelectedComic(comic);
+        onComicSelect(comic);
     };
 
     return (
@@ -43,6 +47,7 @@ export default function MainDisplay() {
                         order={selectedComic.order}
                         main
                     />
+
                 </>
             )}
             <PreloadImages

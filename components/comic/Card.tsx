@@ -16,10 +16,10 @@ function formatDate(dateString: string) {
 
 export default function Card({ title, updatedAt, main, order, isSelected, onClick }: ComicCardProps) {
     const cardContent = (
-        <div className={`${main ? 'p-6' : 'p-4'} ${main ? '' : isSelected ? 'bg-yellow-50' : 'bg-white xs500:hover:bg-gray-100'} transition-colors`}>
+        <div className={`${main ? 'p-6' : 'p-4'} ${main ? 'border-b border-gray-200' : isSelected ? 'bg-yellow-50' : 'bg-white xs500:hover:bg-gray-100'} transition-colors`}>
             <div className={`${main ? 'w-[79vw]' : 'w-full'} mx-auto`}>
-                <div className="flex items-center">
-                    <div className="flex-grow">
+                <div className="flex items-end">
+                    <div className="flex-1">
                         <p className={`${main ? 'text-base' : 'text-sm'} text-gray-500 mb-1`}>{formatDate(updatedAt)}</p>
                         <h3 className={`${main ? 'text-2xl font-bold ml-[-0.9rem]' : 'text-lg font-semibold ml-[-0.7rem]'} text-gray-900`}>【第{order}話】{title}</h3>
                     </div>

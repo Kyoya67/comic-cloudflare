@@ -12,3 +12,16 @@ export const comics = sqliteTable("comics", {
         .notNull()
         .$defaultFn(() => new Date().toISOString()),
 });
+
+export const comments = sqliteTable("comments", {
+    id: text("id")
+        .primaryKey()
+        .$defaultFn(() => randomUUID()),
+    comicId: text("comic_id")
+        .notNull()
+        .references(() => comics.id),
+    content: text("content").notNull(),
+    createdAt: text("created_at")
+        .notNull()
+        .$defaultFn(() => new Date().toISOString()),
+});

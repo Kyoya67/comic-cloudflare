@@ -12,7 +12,7 @@ interface ComicListProps {
 export default function List({ comics, selectedComicId, onComicSelect }: ComicListProps) {
     return (
         <div>
-            <div className="border-b border-black mb-6"></div>
+            <div className=""></div>
             <div className="bg-white">
                 {comics.map((comic) => {
                     const isSelected = comic.id === selectedComicId;
@@ -20,9 +20,7 @@ export default function List({ comics, selectedComicId, onComicSelect }: ComicLi
                         <div
                             key={comic.id}
                             onClick={() => onComicSelect(comic)}
-                            className="max-w-[80vw] mx-auto"
                         >
-                            <div className="border-t border-gray-200"></div>
                             <Card
                                 id={comic.id}
                                 title={comic.title}

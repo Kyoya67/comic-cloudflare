@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import MainDisplay from './MainDisplay';
 import List from './List';
+import CommentSection from './CommentSection';
+import NavigationTabs from './NavigationTabs';
 import { useComics } from '../../context/ComicsContext';
 import type { Comic } from '../../types/comic';
 
@@ -12,6 +14,7 @@ interface ComicViewerProps {
 
 export default function Viewer({ mainComicId }: ComicViewerProps) {
     const { comics, selectedComic, setSelectedComic } = useComics();
+    const [activeTab, setActiveTab] = useState<'list' | 'comments'>('list');
 
     useEffect(() => {
         if (mainComicId && comics.length > 0) {
@@ -30,6 +33,10 @@ export default function Viewer({ mainComicId }: ComicViewerProps) {
         setSelectedComic(comic);
     };
 
+    const handleTabChange = (tab: 'list' | 'comments') => {
+        setActiveTab(tab);
+    };
+
     if (!selectedComic) {
         return (
             <div className="bg-gray-900 flex items-center justify-center min-h-screen">
@@ -44,12 +51,27 @@ export default function Viewer({ mainComicId }: ComicViewerProps) {
     return (
         <>
             <main className="mx-auto mb-6">
-                <MainDisplay />
-                <List
+                <MainDisplay
                     comics={comics}
-                    selectedComicId={selectedComic.id}
+                    selectedComic={selectedComic}
                     onComicSelect={handleComicSelect}
                 />
+                <NavigationTabs
+                    activeTab={activeTab}
+                    onTabChange={handleTabChange}
+                >
+                    {activeTab === 'comments' ? (
+                        <CommentSection
+                            comicId={selectedComic.id}
+                        />
+                    ) : (
+                        <List
+                            comics={comics}
+                            selectedComicId={selectedComic.id}
+                            onComicSelect={handleComicSelect}
+                        />
+                    )}
+                </NavigationTabs>
             </main>
         </>
     );
