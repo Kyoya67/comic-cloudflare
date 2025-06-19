@@ -12,7 +12,7 @@ interface ComicListProps {
 export default function List({ comics, selectedComicId, onComicSelect }: ComicListProps) {
     return (
         <div>
-            <div className="border-b border-black mb-6"></div>
+            <div className="border-b border-gray-400 mb-6"></div>
             <div className="bg-white">
                 {comics.map((comic) => {
                     const isSelected = comic.id === selectedComicId;

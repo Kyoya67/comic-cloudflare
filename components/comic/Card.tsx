@@ -19,16 +19,16 @@ export default function Card({ title, updatedAt, main, order, isSelected, onClic
     const cardContent = (
         <div className={`${main ? 'p-6' : 'p-4'} ${main ? '' : isSelected ? 'bg-yellow-50' : 'bg-white xs500:hover:bg-gray-100'} transition-colors`}>
             <div className={`${main ? 'w-[79vw]' : 'w-full'} mx-auto`}>
-                <div className="flex items-center">
-                    <div className="flex-grow">
+                <div className="flex items-end">
+                    <div className="flex-1">
                         <p className={`${main ? 'text-base' : 'text-sm'} text-gray-500 mb-1`}>{formatDate(updatedAt)}</p>
                         <h3 className={`${main ? 'text-2xl font-bold ml-[-0.9rem]' : 'text-lg font-semibold ml-[-0.7rem]'} text-gray-900`}>【第{order}話】{title}</h3>
                     </div>
                     {main && onCommentClick && (
-                        <div className="ml-4">
+                        <div className="ml-10 mb-[-0.25rem]">
                             <button
                                 onClick={onCommentClick}
-                                className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"
+                                className="flex items-center gap-1 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"
                                 aria-label="コメントを表示"
                             >
                                 <svg
@@ -43,6 +43,7 @@ export default function Card({ title, updatedAt, main, order, isSelected, onClic
                                 >
                                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                                 </svg>
+                                <span className="text-sm text-gray-500">コメント</span>
                             </button>
                         </div>
                     )}

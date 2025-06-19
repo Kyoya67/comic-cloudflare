@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import MainDisplay from './MainDisplay';
 import List from './List';
+import CommentSection from './CommentSection';
 import { useComics } from '../../context/ComicsContext';
 import type { Comic } from '../../types/comic';
 
@@ -12,6 +13,7 @@ interface ComicViewerProps {
 
 export default function Viewer({ mainComicId }: ComicViewerProps) {
     const { comics, selectedComic, setSelectedComic } = useComics();
+    const [isCommentsOpen, setIsCommentsOpen] = useState(false);
 
     useEffect(() => {
         if (mainComicId && comics.length > 0) {
@@ -28,6 +30,11 @@ export default function Viewer({ mainComicId }: ComicViewerProps) {
 
     const handleComicSelect = (comic: Comic) => {
         setSelectedComic(comic);
+        setIsCommentsOpen(false);
+    };
+
+    const handleToggleComments = () => {
+        setIsCommentsOpen(!isCommentsOpen);
     };
 
     if (!selectedComic) {
@@ -44,12 +51,21 @@ export default function Viewer({ mainComicId }: ComicViewerProps) {
     return (
         <>
             <main className="mx-auto mb-6">
-                <MainDisplay />
-                <List
+                <MainDisplay
                     comics={comics}
-                    selectedComicId={selectedComic.id}
+                    selectedComic={selectedComic}
                     onComicSelect={handleComicSelect}
+                    onCommentClick={handleToggleComments}
                 />
+                {isCommentsOpen ? (
+                    <CommentSection comicId={selectedComic.id} />
+                ) : (
+                    <List
+                        comics={comics}
+                        selectedComicId={selectedComic.id}
+                        onComicSelect={handleComicSelect}
+                    />
+                )}
             </main>
         </>
     );

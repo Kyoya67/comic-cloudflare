@@ -4,13 +4,17 @@ import { useState } from 'react';
 import Slider from './Slider';
 import Card from './Card';
 import PreloadImages from '../PreloadImages';
-import { useComics } from '../../context/ComicsContext';
 import type { Comic } from '../../types/comic';
 
-export default function MainDisplay() {
-    const { comics, selectedComic, setSelectedComic } = useComics();
+interface MainDisplayProps {
+    comics: Comic[];
+    selectedComic: Comic;
+    onComicSelect: (comic: Comic) => void;
+    onCommentClick?: () => void;
+}
+
+export default function MainDisplay({ comics, selectedComic, onComicSelect, onCommentClick }: MainDisplayProps) {
     const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
-    const [isCommentsOpen, setIsCommentsOpen] = useState(false);
 
     if (!selectedComic) {
         return (
@@ -23,11 +27,13 @@ export default function MainDisplay() {
     const currentIndex = comics.findIndex(comic => comic.id === selectedComic.id);
 
     const handleComicSelect = (comic: Comic) => {
-        setSelectedComic(comic);
+        onComicSelect(comic);
     };
 
     const handleCommentClick = () => {
-        setIsCommentsOpen(!isCommentsOpen);
+        if (onCommentClick) {
+            onCommentClick();
+        }
     };
 
     return (
@@ -49,15 +55,7 @@ export default function MainDisplay() {
                         main
                         onCommentClick={handleCommentClick}
                     />
-                    {isCommentsOpen && (
-                        <div className="bg-white border-t border-gray-200 p-4">
-                            <h3 className="text-lg font-semibold mb-4">コメント</h3>
-                            {/* TODO: ここにコメントコンポーネントを追加 */}
-                            <div className="text-gray-500">
-                                コメント機能は準備中です（コミックID: {selectedComic.id}）
-                            </div>
-                        </div>
-                    )}
+
                 </>
             )}
             <PreloadImages
