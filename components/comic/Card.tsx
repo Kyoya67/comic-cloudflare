@@ -16,7 +16,7 @@ function formatDate(dateString: string) {
 
 export default function Card({ title, updatedAt, main, order, isSelected, onClick }: ComicCardProps) {
     const cardContent = (
-        <div className={`${main ? 'p-6' : 'p-4'} ${isSelected ? 'bg-yellow-50' : 'bg-white'} ${main ? '' : 'hover:bg-gray-100'} transition-colors`}>
+        <div className={`${main ? 'p-6' : 'p-4'} ${main ? '' : isSelected ? 'bg-yellow-50' : 'bg-white xs500:hover:bg-gray-100'} transition-colors`}>
             <div className={`${main ? 'w-[79vw]' : 'w-full'} mx-auto`}>
                 <div className="flex items-center">
                     <div className="flex-grow">

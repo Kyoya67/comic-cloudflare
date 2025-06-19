@@ -34,13 +34,3 @@ body::before {
   height: 200vh;
   z-index: -1;
 }
-
-.hidden-mobile {
-  display: none;
-}
-
-@media (min-width: 500px) {
-  .hidden-mobile {
-    display: flex;
-  }
-}

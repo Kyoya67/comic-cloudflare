@@ -17,7 +17,12 @@ export default function NavigationButton({
 }: NavigationButtonProps) {
     const isLeft = direction === 'left';
 
-    const baseClasses = "flex items-center justify-center w-12 h-12 text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed hidden-mobile";
+    const baseClasses = `
+        hidden xs500:flex 
+        items-center 
+        justify-center 
+        w-12 h-12 text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed
+    `;
 
     const positionClasses = isLeft
         ? "absolute left-4 top-1/2 -translate-y-1/2"
