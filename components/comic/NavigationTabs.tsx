@@ -47,9 +47,9 @@ interface TabProps {
 }
 
 const Tab = ({ value, isActive, onSelect, icon, label }: TabProps) => {
-    const baseClasses = "flex items-center justify-center gap-2 p-4 font-medium transition-colors";
+    const baseClasses = "flex items-center justify-center gap-2 p-3 xs500:p-4 font-medium transition-colors";
     const activeClasses = "bg-blue-50 text-blue-600 border-b-2 border-blue-600";
-    const inactiveClasses = "text-gray-600 hover:text-gray-900 hover:bg-gray-100";
+    const inactiveClasses = "text-gray-600 xs500:hover:text-gray-900 xs500:hover:bg-gray-100";
 
     return (
         <label className="flex-1 cursor-pointer">
@@ -71,7 +71,7 @@ const Tab = ({ value, isActive, onSelect, icon, label }: TabProps) => {
 
 export default function NavigationTabs({ activeTab, onTabChange, children }: NavigationTabsProps) {
     return (
-        <div className="flex flex-col w-[80vw] mx-auto">
+        <div className="flex flex-col w-[90vw] xs500:w-[80vw] mx-auto">
             <div className="flex bg-white">
                 <Tab
                     value="list"
