@@ -7,9 +7,10 @@ import CommentList from './CommentList';
 
 interface CommentSectionProps {
     comicId: string;
+    className: string;
 }
 
-export default function CommentSection({ comicId }: CommentSectionProps) {
+export default function CommentSection({ comicId, className }: CommentSectionProps) {
     const [comments, setComments] = useState<Comment[]>([]);
     const [loading, setLoading] = useState(true);
     const [posting, setPosting] = useState(false);
@@ -44,7 +45,7 @@ export default function CommentSection({ comicId }: CommentSectionProps) {
     };
 
     return (
-        <div className="bg-white border-t border-gray-400 p-4">
+        <div className={`bg-white border-t border-gray-400 p-4 ${className}`}>
             <h3 className="text-lg font-semibold mb-4">コメント ({comments.length})</h3>
 
             <CommentForm onSubmit={handleCommentSubmit} isPosting={posting} />

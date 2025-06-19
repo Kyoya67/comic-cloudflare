@@ -7,9 +7,10 @@ interface ComicListProps {
     comics: Comic[];
     selectedComicId: string | null;
     onComicSelect: (comic: Comic) => void;
+    className?: string;
 }
 
-export default function List({ comics, selectedComicId, onComicSelect }: ComicListProps) {
+export default function List({ comics, selectedComicId, onComicSelect, className }: ComicListProps) {
     return (
         <div>
             <div className="border-b border-gray-400 mb-6"></div>
@@ -20,7 +21,7 @@ export default function List({ comics, selectedComicId, onComicSelect }: ComicLi
                         <div
                             key={comic.id}
                             onClick={() => onComicSelect(comic)}
-                            className="max-w-[80vw] mx-auto"
+                            className={className}
                         >
                             <div className="border-t border-gray-200"></div>
                             <Card

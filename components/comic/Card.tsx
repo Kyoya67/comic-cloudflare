@@ -28,7 +28,7 @@ export default function Card({ title, updatedAt, main, order, isSelected, onClic
                         <div className="ml-10 mb-[-0.25rem]">
                             <button
                                 onClick={onCommentClick}
-                                className="flex items-center gap-1 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"
+                                className="flex items-center gap-1 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
                                 aria-label="コメントを表示"
                             >
                                 <svg

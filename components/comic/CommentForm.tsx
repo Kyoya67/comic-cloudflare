@@ -39,7 +39,7 @@ export default function CommentForm({ onSubmit, isPosting }: CommentFormProps) {
                     type="submit"
                     disabled={isDisabled}
                 >
-                    {isPosting ? '投稿中...' : 'コメント投稿'}
+                    {isPosting ? '投稿中...' : '投稿する'}
                 </Button>
             </div>
         </form>

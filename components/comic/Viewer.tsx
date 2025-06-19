@@ -58,12 +58,16 @@ export default function Viewer({ mainComicId }: ComicViewerProps) {
                     onCommentClick={handleToggleComments}
                 />
                 {isCommentsOpen ? (
-                    <CommentSection comicId={selectedComic.id} />
+                    <CommentSection
+                        comicId={selectedComic.id}
+                        className="max-w-[80vw] mx-auto"
+                    />
                 ) : (
                     <List
                         comics={comics}
                         selectedComicId={selectedComic.id}
                         onComicSelect={handleComicSelect}
+                        className="max-w-[80vw] mx-auto"
                     />
                 )}
             </main>
