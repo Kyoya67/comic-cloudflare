@@ -10,6 +10,7 @@ import type { Comic } from '../../types/comic';
 export default function MainDisplay() {
     const { comics, selectedComic, setSelectedComic } = useComics();
     const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
+    const [isCommentsOpen, setIsCommentsOpen] = useState(false);
 
     if (!selectedComic) {
         return (
@@ -23,6 +24,10 @@ export default function MainDisplay() {
 
     const handleComicSelect = (comic: Comic) => {
         setSelectedComic(comic);
+    };
+
+    const handleCommentClick = () => {
+        setIsCommentsOpen(!isCommentsOpen);
     };
 
     return (
@@ -42,7 +47,17 @@ export default function MainDisplay() {
                         imageUrl={selectedComic.imageUrl}
                         order={selectedComic.order}
                         main
+                        onCommentClick={handleCommentClick}
                     />
+                    {isCommentsOpen && (
+                        <div className="bg-white border-t border-gray-200 p-4">
+                            <h3 className="text-lg font-semibold mb-4">コメント</h3>
+                            {/* TODO: ここにコメントコンポーネントを追加 */}
+                            <div className="text-gray-500">
+                                コメント機能は準備中です（コミックID: {selectedComic.id}）
+                            </div>
+                        </div>
+                    )}
                 </>
             )}
             <PreloadImages
