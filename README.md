@@ -2,8 +2,7 @@
 
 モダンな技術スタックで構築した、高性能な漫画閲覧・管理アプリケーションです。**Cloudflareの設定とGitHub認証のセットアップだけで、誰でも簡単に独自の漫画サイトを運営できます！**
 
-🚀 **デモサイト**: [https://real-fight.org](https://real-fight.org) -
-リレー形式で制作された友人の漫画を例に、実際の機能をご覧いただけます。
+<br>
 
 ## 🎯 プロジェクトの特徴
 
@@ -16,6 +15,8 @@
 ### 🔧 開発の背景
 
 Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouTube動画](https://www.youtube.com/watch?v=z4NeMhE-wdo)を参考にしました。ドキュメント版は[こちら](https://qiita.com/Sicut_study/items/1e03af8bb7f54198bb8a#%E3%81%8A%E3%82%8F%E3%82%8A%E3%81%AB)です。
+
+<br>
 
 ---
 
@@ -103,11 +104,15 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 - **Tailwind CSS** - ユーティリティファーストのスタイリング
 - **React Dropzone** - ファイルアップロード機能
 
+<br>
+
 ### 🔧 バックエンド・API
 
 - **Hono 4.7.11** - 高速・軽量なWebフレームワーク（Cloudflare Workers最適化）
 - **Drizzle ORM 0.44.2** - 型安全なSQLiteクエリビルダー
 - **NextAuth v5.0.0-beta.28** - 次世代認証・認可システム
+
+<br>
 
 ### ☁️ インフラストラクチャ（Cloudflareエコシステム）
 
@@ -116,11 +121,15 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 - **Cloudflare D1** - SQLiteベースのエッジデータベース
 - **Cloudflare R2** - オブジェクトストレージ（S3互換）
 
+<br>
+
 ### 🏗️ レンダリング戦略
 
 - **SSR（Server-Side Rendering）**: 初回表示の高速化とSEO対策
 - **ISR（Incremental Static Regeneration）**: 静的生成とキャッシュの最適バランス
 - **Client-Side Navigation**: SPA的な滑らかな画面遷移
+
+<br>
 
 ---
 
