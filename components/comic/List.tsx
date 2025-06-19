@@ -7,13 +7,12 @@ interface ComicListProps {
     comics: Comic[];
     selectedComicId: string | null;
     onComicSelect: (comic: Comic) => void;
-    className?: string;
 }
 
-export default function List({ comics, selectedComicId, onComicSelect, className }: ComicListProps) {
+export default function List({ comics, selectedComicId, onComicSelect }: ComicListProps) {
     return (
         <div>
-            <div className="border-b border-gray-400 mb-6"></div>
+            <div className=""></div>
             <div className="bg-white">
                 {comics.map((comic) => {
                     const isSelected = comic.id === selectedComicId;
@@ -21,9 +20,7 @@ export default function List({ comics, selectedComicId, onComicSelect, className
                         <div
                             key={comic.id}
                             onClick={() => onComicSelect(comic)}
-                            className={className}
                         >
-                            <div className="border-t border-gray-200"></div>
                             <Card
                                 id={comic.id}
                                 title={comic.title}

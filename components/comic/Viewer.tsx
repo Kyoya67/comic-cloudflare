@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import MainDisplay from './MainDisplay';
 import List from './List';
 import CommentSection from './CommentSection';
+import NavigationTabs from './NavigationTabs';
 import { useComics } from '../../context/ComicsContext';
 import type { Comic } from '../../types/comic';
 
@@ -13,7 +14,7 @@ interface ComicViewerProps {
 
 export default function Viewer({ mainComicId }: ComicViewerProps) {
     const { comics, selectedComic, setSelectedComic } = useComics();
-    const [isCommentsOpen, setIsCommentsOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState<'list' | 'comments'>('list');
 
     useEffect(() => {
         if (mainComicId && comics.length > 0) {
@@ -30,11 +31,11 @@ export default function Viewer({ mainComicId }: ComicViewerProps) {
 
     const handleComicSelect = (comic: Comic) => {
         setSelectedComic(comic);
-        setIsCommentsOpen(false);
+        setActiveTab('list'); // コミック切り替え時はリスト表示に戻る
     };
 
-    const handleToggleComments = () => {
-        setIsCommentsOpen(!isCommentsOpen);
+    const handleTabChange = (tab: 'list' | 'comments') => {
+        setActiveTab(tab);
     };
 
     if (!selectedComic) {
@@ -55,21 +56,23 @@ export default function Viewer({ mainComicId }: ComicViewerProps) {
                     comics={comics}
                     selectedComic={selectedComic}
                     onComicSelect={handleComicSelect}
-                    onCommentClick={handleToggleComments}
                 />
-                {isCommentsOpen ? (
-                    <CommentSection
-                        comicId={selectedComic.id}
-                        className="max-w-[80vw] mx-auto"
-                    />
-                ) : (
-                    <List
-                        comics={comics}
-                        selectedComicId={selectedComic.id}
-                        onComicSelect={handleComicSelect}
-                        className="max-w-[80vw] mx-auto"
-                    />
-                )}
+                <NavigationTabs
+                    activeTab={activeTab}
+                    onTabChange={handleTabChange}
+                >
+                    {activeTab === 'comments' ? (
+                        <CommentSection
+                            comicId={selectedComic.id}
+                        />
+                    ) : (
+                        <List
+                            comics={comics}
+                            selectedComicId={selectedComic.id}
+                            onComicSelect={handleComicSelect}
+                        />
+                    )}
+                </NavigationTabs>
             </main>
         </>
     );

@@ -10,10 +10,9 @@ interface MainDisplayProps {
     comics: Comic[];
     selectedComic: Comic;
     onComicSelect: (comic: Comic) => void;
-    onCommentClick?: () => void;
 }
 
-export default function MainDisplay({ comics, selectedComic, onComicSelect, onCommentClick }: MainDisplayProps) {
+export default function MainDisplay({ comics, selectedComic, onComicSelect }: MainDisplayProps) {
     const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
 
     if (!selectedComic) {
@@ -28,12 +27,6 @@ export default function MainDisplay({ comics, selectedComic, onComicSelect, onCo
 
     const handleComicSelect = (comic: Comic) => {
         onComicSelect(comic);
-    };
-
-    const handleCommentClick = () => {
-        if (onCommentClick) {
-            onCommentClick();
-        }
     };
 
     return (
@@ -53,7 +46,6 @@ export default function MainDisplay({ comics, selectedComic, onComicSelect, onCo
                         imageUrl={selectedComic.imageUrl}
                         order={selectedComic.order}
                         main
-                        onCommentClick={handleCommentClick}
                     />
 
                 </>
