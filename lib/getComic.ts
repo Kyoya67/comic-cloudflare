@@ -5,7 +5,10 @@ export async function getComic(id: string): Promise<Comic | null> {
 
     try {
         const res = await apiFetch(`/api/comics/${id}`, {
-            cache: "no-store",
+            cache: "force-cache",
+            next: {
+                revalidate: 60 * 60 * 12,
+            },
         });
         if (!res.ok) {
             if (res.status === 404) {
