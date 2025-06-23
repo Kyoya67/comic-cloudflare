@@ -41,7 +41,7 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 
 <br>
 
-### 💬 コメント機能
+### コメント機能
 
 <img src="public/comment.png" alt="コメント機能" width="60%" style="border: 2px solid #e5e7eb;">
 
@@ -84,7 +84,7 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 
 <br>
 
-### ⚡ パフォーマンス最適化
+### パフォーマンス最適化
 
 **エッジファーストアーキテクチャ**
 
@@ -118,7 +118,7 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 
 <br>
 
-### ☁インフラストラクチャ（Cloudflareエコシステム）
+### インフラストラクチャ（Cloudflareエコシステム）
 
 - **Cloudflare Pages** - JAMstackホスティング
 - **Cloudflare Workers** - エッジサーバーレス関数
@@ -178,9 +178,9 @@ comic-cloudflare/
 
 ---
 
-## 🚀 セットアップ手順
+## セットアップ手順
 
-### 📋 前提条件
+### 前提条件
 
 - **Node.js 18+**
 - **npm/yarn/pnpm** パッケージマネージャー
