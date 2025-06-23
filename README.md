@@ -8,15 +8,15 @@
 
 <br>
 
-## 🎯 プロジェクトの特徴
+## プロジェクトの特徴
 
-### ✨ なぜこのアプリケーションを作ったのか
+### なぜこのアプリケーションを作ったのか
 
-- 個人・サークル・同人作家が手軽に漫画サイトを立ち上げられる環境を提供
+- Xにポストして更新していた漫画データを見やすくするため
 - Cloudflareエコシステムを活用した高速・低コストな運用を実現
 - レスポンシブ対応で、スマホからデスクトップまで最適な読書体験を提供
 
-### 🔧 開発の背景
+### 開発の背景
 
 Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouTube動画](https://www.youtube.com/watch?v=z4NeMhE-wdo)を参考にしました。ドキュメント版は[こちら](https://qiita.com/Sicut_study/items/1e03af8bb7f54198bb8a#%E3%81%8A%E3%82%8F%E3%82%8A%E3%81%AB)です。
 
@@ -24,9 +24,9 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 
 ---
 
-## 🌟 主な機能
+## 主な機能
 
-### 📖 漫画閲覧機能
+### 漫画閲覧機能
 
 <img src="public/comic.png" alt="漫画閲覧画面" width="60%" style="border: 2px solid #e5e7eb；">
 
@@ -55,7 +55,7 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 
 <br>
 
-### 🔐 認証・管理システム
+### 認証・管理システム
 
 <img src="public/auth.png" alt="GitHub認証" width="60%">
 
@@ -98,9 +98,9 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 
 ---
 
-## 🛠 技術スタック
+## 技術スタック
 
-### 🎨 フロントエンド
+### フロントエンド
 
 - **Next.js 14.2.0** - App Router + SSR/ISRによるモダンなReactフレームワーク
 - **React 18** - 最新のConcurrent Features対応
@@ -110,7 +110,7 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 
 <br>
 
-### 🔧 バックエンド・API
+### バックエンド・API
 
 - **Hono 4.7.11** - 高速・軽量なWebフレームワーク（Cloudflare Workers最適化）
 - **Drizzle ORM 0.44.2** - 型安全なSQLiteクエリビルダー
@@ -118,7 +118,7 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 
 <br>
 
-### ☁️ インフラストラクチャ（Cloudflareエコシステム）
+### ☁インフラストラクチャ（Cloudflareエコシステム）
 
 - **Cloudflare Pages** - JAMstackホスティング
 - **Cloudflare Workers** - エッジサーバーレス関数
@@ -127,7 +127,7 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 
 <br>
 
-### 🏗️ レンダリング戦略
+### レンダリング戦略
 
 - **SSR（Server-Side Rendering）**: 初回表示の高速化とSEO対策
 - **ISR（Incremental Static Regeneration）**: 静的生成とキャッシュの最適バランス
@@ -137,7 +137,7 @@ Cloudflare全般の理解が必要だったため、[JISOUチャンネルのYouT
 
 ---
 
-## 📁 プロジェクト構成
+## プロジェクト構成
 
 ```
 comic-cloudflare/
