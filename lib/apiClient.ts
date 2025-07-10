@@ -6,10 +6,6 @@ export function getBaseUrl(): string {
         return 'http://localhost:3000';
     }
 
-    if (process.env.MINIFLARE === 'true') {
-        return 'http://127.0.0.1:8787';
-    }
-
     if (process.env.NODE_ENV === 'production') {
         return process.env.NEXT_PUBLIC_SITE_URL || '';
     }
