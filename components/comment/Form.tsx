@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import { Button } from '../controls';
 
-interface CommentFormProps {
+interface FormProps {
     onSubmit: (content: string) => Promise<void>;
     isPosting: boolean;
 }
 
-export default function CommentForm({ onSubmit, isPosting }: CommentFormProps) {
+export default function Form({ onSubmit, isPosting }: FormProps) {
     const [newComment, setNewComment] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {

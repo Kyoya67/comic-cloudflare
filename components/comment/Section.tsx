@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { getComments, postComment, type Comment } from '../../lib/commentApi';
-import CommentForm from './CommentForm';
-import CommentList from './CommentList';
+import CommentForm from './Form';
+import CommentList from './List';
 
-interface CommentSectionProps {
+interface SectionProps {
     comicId: string;
 }
 
-export default function CommentSection({ comicId }: CommentSectionProps) {
+export default function Section({ comicId }: SectionProps) {
     const [comments, setComments] = useState<Comment[]>([]);
     const [loading, setLoading] = useState(true);
     const [posting, setPosting] = useState(false);
