@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Button } from '../controls';
-import { uploadComicAction } from '@/app/admin/action';
+import { uploadComicAction } from '@/app/actions/admin';
 import { useBlobUrl } from '@/hooks/useBlobUrl';
 
 interface AddComicModalProps {
@@ -31,10 +31,14 @@ export default function AddComicModal({ isOpen, onClose }: AddComicModalProps) {
         formData.append('file', file as File);
 
         try {
-            await uploadComicAction(formData);
-            setTitle('');
-            setFile(null);
-            onClose();
+            const result = await uploadComicAction(formData);
+            if (result?.success) {
+                setTitle('');
+                setFile(null);
+                onClose();
+            } else if (result?.error) {
+                console.error('Failed to upload comic:', result.error);
+            }
         } catch (error) {
             console.error('Failed to upload comic:', error);
         }
