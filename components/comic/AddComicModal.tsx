@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Button } from '../controls';
 import { uploadComicAction } from '@/app/admin/action';
+import { useBlobUrl } from '@/hooks/useBlobUrl';
 
 interface AddComicModalProps {
     isOpen: boolean;
@@ -13,6 +14,7 @@ interface AddComicModalProps {
 export default function AddComicModal({ isOpen, onClose }: AddComicModalProps) {
     const [title, setTitle] = useState('');
     const [file, setFile] = useState<File | null>(null);
+    const blobUrl = useBlobUrl(file);
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
         setFile(acceptedFiles[0]);
@@ -82,7 +84,7 @@ export default function AddComicModal({ isOpen, onClose }: AddComicModalProps) {
                                 <div>
                                     <p className="text-sm text-gray-700 mb-2">選択されたファイル: {file.name}</p>
                                     <img
-                                        src={URL.createObjectURL(file)}
+                                        src={blobUrl || undefined}
                                         alt="preview"
                                         className="max-h-48 mx-auto mt-2 rounded"
                                     />
