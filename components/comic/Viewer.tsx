@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import MainDisplay from './MainDisplay';
 import List from './List';
-import CommentSection from './CommentSection';
+import Section from '../comment/Section';
 import NavigationTabs from './NavigationTabs';
 import { useComics } from '../../context/ComicsContext';
 import type { Comic } from '../../types/comic';
@@ -61,7 +61,7 @@ export default function Viewer({ mainComicId }: ComicViewerProps) {
                     onTabChange={handleTabChange}
                 >
                     {activeTab === 'comments' ? (
-                        <CommentSection
+                        <Section
                             comicId={selectedComic.id}
                         />
                     ) : (

@@ -4,7 +4,6 @@ import { drizzle } from "drizzle-orm/d1";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { randomUUID } from "crypto";
 
 const app = new Hono().basePath("/api");
 
@@ -47,32 +46,6 @@ app.get("/comics/:comicId/comments", async (c) => {
     }
 });
 
-app.post("/comics/:comicId/comments", async (c) => {
-    const comicId = c.req.param('comicId');
-
-    try {
-        const { content } = await c.req.json();
-
-        if (!content || content.trim() === '') {
-            return c.json({ success: false, message: 'Content is required' }, 400);
-        }
-
-        const db = getDatabase();
-
-        await db.insert(comments).values({
-            id: randomUUID(),
-            comicId: comicId,
-            content: content.trim(),
-            createdAt: new Date().toISOString(),
-        });
-
-        return c.json({ success: true, message: 'Comment posted successfully' });
-    } catch (error) {
-        console.error('Failed to post comment', error);
-        return c.json({ success: false, message: 'Failed to post comment', error: error }, 500);
-    }
-});
-
 app.get("/image/:filename", async (c) => {
     const filename = c.req.param('filename');
 
@@ -106,47 +79,4 @@ app.get("/image/:filename", async (c) => {
     }
 });
 
-app.post("/upload", async (c) => {
-    const formData = await c.req.formData();
-    const title = formData.get('title');
-    const fileData = formData.get('file');
-
-    if (!fileData) {
-        return c.json({ message: 'File not found' }, 400);
-    }
-
-    const file = fileData as File;
-    const fileName = `${Date.now()}-${file.name}`;
-
-    try {
-        const r2 = (getCloudflareContext().env as any).R2 as unknown as R2Bucket;
-        await r2.put(fileName, file);
-    } catch (r2Error) {
-        console.error('R2 not found in upload', r2Error);
-        return c.json({ success: false, message: 'R2 not found', error: r2Error }, 500);
-    }
-
-    const db = getDatabase();
-
-    const result = await db
-        .select({ maxOrder: sql`MAX("order")` })
-        .from(comics);
-
-    const nextOrder = Number(result[0].maxOrder) + 1;
-
-    try {
-        await db.insert(comics).values({
-            title: title as string,
-            order: nextOrder,
-            imageUrl: fileName,
-            updatedAt: new Date().toISOString(),
-        });
-    } catch (error) {
-        console.error('Comic uploaded failed', error);
-        return c.json({ success: false, message: 'Comic uploaded failed' }, 500);
-    }
-    return c.json({ success: true, message: 'Comic uploaded successfully' });
-});
-
 export const GET = handle(app);
-export const POST = handle(app);

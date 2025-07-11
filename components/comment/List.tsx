@@ -1,14 +1,14 @@
 'use client';
 
-import CommentItem from './CommentItem';
+import CommentItem from './Item';
 import type { Comment } from '../../lib/commentApi';
 
-interface CommentListProps {
+interface ListProps {
     comments: Comment[];
     loading: boolean;
 }
 
-export default function CommentList({ comments, loading }: CommentListProps) {
+export default function List({ comments, loading }: ListProps) {
     if (loading) {
         return (
             <div className="text-center py-4">

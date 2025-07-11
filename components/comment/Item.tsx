@@ -2,11 +2,11 @@
 
 import type { Comment } from '../../lib/commentApi';
 
-interface CommentItemProps {
+interface ItemProps {
     comment: Comment;
 }
 
-export default function CommentItem({ comment }: CommentItemProps) {
+export default function Item({ comment }: ItemProps) {
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('ja-JP', {
