@@ -27,8 +27,13 @@ export default function AddComicModal({ isOpen, onClose }: AddComicModalProps) {
     });
 
     const handleAction = async (formData: FormData) => {
+        if (!title.trim() || !file) {
+            console.error('Title and file are required');
+            return;
+        }
+
         formData.append('title', title);
-        formData.append('file', file as File);
+        formData.append('file', file);
 
         try {
             const result = await uploadComicAction(formData);

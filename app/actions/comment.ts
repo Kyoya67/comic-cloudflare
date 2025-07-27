@@ -10,9 +10,15 @@ let memoizedDb: ReturnType<typeof drizzle> | null = null;
 
 function getDatabase() {
     if (!memoizedDb) {
-        memoizedDb = drizzle(
-            (getCloudflareContext().env as any).DB as unknown as D1Database
-        );
+        try {
+            const context = getCloudflareContext();
+            if (!context?.env?.DB) {
+                throw new Error('Database not available in Cloudflare context');
+            }
+            memoizedDb = drizzle(context.env.DB as D1Database);
+        } catch (error) {
+            throw new Error('Failed to initialize database connection');
+        }
     }
     return memoizedDb;
 }
