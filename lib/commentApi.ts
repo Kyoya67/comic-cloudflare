@@ -8,7 +8,7 @@ export interface Comment {
 
 export async function getComments(comicId: string): Promise<Comment[]> {
     const res = await apiFetch(`/api/comics/${comicId}/comments`, {
-        cache: "no-store",
+        next: { tags: [`comments-${comicId}`] }
     });
 
     const result = await res.json() as Comment[];

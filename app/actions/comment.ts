@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { comments } from "@/db/schema";
 import { drizzle } from "drizzle-orm/d1";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
@@ -31,7 +31,7 @@ export async function createComment(comicId: string, content: string) {
             createdAt: new Date().toISOString(),
         });
 
-        revalidatePath("/", "layout");
+        revalidateTag(`comments-${comicId}`);
         return { success: true };
     } catch (error) {
         return { error: 'コメントの投稿に失敗しました' };

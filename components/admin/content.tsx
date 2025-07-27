@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Card from '../comic/Card';
-import AddComicModal from '../comic/AddComicModal';
+import AddComicModal from './AddComicModal';
 import AdminHeader from './header';
 import { ComicActionButtons } from '../controls';
 import type { Comic } from '../../types/comic';
