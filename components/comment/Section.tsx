@@ -11,7 +11,6 @@ interface SectionProps {
 
 export default function Section({ comicId }: SectionProps) {
     const [comments, setComments] = useState<Comment[]>([]);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchComments();
@@ -19,21 +18,18 @@ export default function Section({ comicId }: SectionProps) {
 
     const fetchComments = async () => {
         try {
-            setLoading(true);
             const data = await getComments(comicId);
             setComments(data);
         } catch (error) {
             console.error('コメント取得エラー:', error);
-        } finally {
-            setLoading(false);
         }
     };
 
     return (
         <div className="bg-white">
             <div className="p-4">
-                <Form comicId={comicId} />
-                <List comments={comments} loading={loading} />
+                <Form comicId={comicId} onCommentAdded={fetchComments} />
+                <List comments={comments} />
             </div>
         </div>
     );

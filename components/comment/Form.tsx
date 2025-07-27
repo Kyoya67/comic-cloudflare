@@ -6,9 +6,10 @@ import { createComment } from '@/app/actions/comment';
 
 interface FormProps {
     comicId: string;
+    onCommentAdded?: () => void;
 }
 
-export default function Form({ comicId }: FormProps) {
+export default function Form({ comicId, onCommentAdded }: FormProps) {
     const [newComment, setNewComment] = useState('');
 
     const handleAction = async () => {
@@ -21,6 +22,7 @@ export default function Form({ comicId }: FormProps) {
                 return;
             }
             setNewComment('');
+            onCommentAdded?.();
         } catch (error) {
             console.error('Failed to create comment:', error);
             alert('コメントの投稿に失敗しました。もう一度お試しください。');

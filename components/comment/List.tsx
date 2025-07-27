@@ -5,17 +5,9 @@ import type { Comment } from '../../lib/commentApi';
 
 interface ListProps {
     comments: Comment[];
-    loading: boolean;
 }
 
-export default function List({ comments, loading }: ListProps) {
-    if (loading) {
-        return (
-            <div className="text-center py-4">
-                <div className="text-gray-500">読み込み中...</div>
-            </div>
-        );
-    }
+export default function List({ comments }: ListProps) {
 
     if (comments.length === 0) {
         return (
