@@ -20,6 +20,7 @@ export default function List({ comics, selectedComicId, onComicSelect }: ComicLi
                         <div
                             key={comic.id}
                             onClick={() => onComicSelect(comic)}
+                            className="cursor-pointer"
                         >
                             <Card
                                 id={comic.id}

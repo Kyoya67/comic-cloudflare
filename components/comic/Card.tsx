@@ -3,7 +3,6 @@ import type { Comic } from '../../types/comic';
 interface ComicCardProps extends Comic {
     main?: boolean;
     isSelected?: boolean;
-    onClick?: () => void;
 }
 
 function formatDate(dateString: string) {
@@ -14,7 +13,7 @@ function formatDate(dateString: string) {
     return `${year}年${month}月${day}日`;
 }
 
-export default function Card({ title, updatedAt, main, order, isSelected, onClick }: ComicCardProps) {
+export default function Card({ title, updatedAt, main, order, isSelected }: ComicCardProps) {
     const cardContent = (
         <div className={`${main ? 'p-6' : 'p-4'} ${main ? 'border-b border-gray-200' : isSelected ? 'bg-yellow-50' : 'bg-white xs500:hover:bg-gray-100'} transition-colors`}>
             <div className={`${main ? 'w-[79vw]' : 'w-full'} mx-auto`}>
@@ -28,16 +27,8 @@ export default function Card({ title, updatedAt, main, order, isSelected, onClic
         </div>
     );
 
-    if (main) {
-        return (
-            <div>
-                {cardContent}
-            </div>
-        );
-    }
-
     return (
-        <div onClick={onClick} className="cursor-pointer">
+        <div>
             {cardContent}
         </div>
     );

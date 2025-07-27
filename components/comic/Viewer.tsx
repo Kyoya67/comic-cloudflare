@@ -8,26 +8,15 @@ import NavigationTabs from './NavigationTabs';
 import { useComics } from '../../context/ComicsContext';
 import type { Comic } from '../../types/comic';
 
-interface ComicViewerProps {
-    mainComicId?: string;
-}
-
-export default function Viewer({ mainComicId }: ComicViewerProps) {
+export default function Viewer() {
     const { comics, selectedComic, setSelectedComic } = useComics();
     const [activeTab, setActiveTab] = useState<'list' | 'comments'>('list');
 
     useEffect(() => {
-        if (mainComicId && comics.length > 0) {
-            const targetComic = comics.find(comic => comic.id === mainComicId);
-            if (targetComic) {
-                setSelectedComic(targetComic);
-            } else {
-                setSelectedComic(comics[comics.length - 1]);
-            }
-        } else if (comics.length > 0 && !selectedComic) {
+        if (comics.length > 0 && !selectedComic) {
             setSelectedComic(comics[comics.length - 1]);
         }
-    }, [mainComicId, comics, selectedComic, setSelectedComic]);
+    }, [comics, selectedComic, setSelectedComic]);
 
     const handleComicSelect = (comic: Comic) => {
         setSelectedComic(comic);
