@@ -16,7 +16,7 @@ export default function Viewer() {
         if (comics.length > 0 && !selectedComic) {
             setSelectedComic(comics[comics.length - 1]);
         }
-    }, [comics, selectedComic, setSelectedComic]);
+    }, []);
 
     const handleComicSelect = (comic: Comic) => {
         setSelectedComic(comic);
