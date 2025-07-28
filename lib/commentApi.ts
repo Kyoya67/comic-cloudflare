@@ -5,7 +5,6 @@ export type Comment = {
     comicId: string;
     content: string;
     createdAt: string;
-    sending?: boolean;
 }
 
 export async function getComments(comicId: string): Promise<Comment[]> {
