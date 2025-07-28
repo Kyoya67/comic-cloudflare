@@ -1,7 +1,8 @@
 import { apiFetch } from './apiClient';
 
-export interface Comment {
+export type Comment = {
     id: string;
+    comicId: string;
     content: string;
     createdAt: string;
 }

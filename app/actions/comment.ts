@@ -23,23 +23,31 @@ function getDatabase() {
     return memoizedDb;
 }
 
-export async function createComment(comicId: string, content: string) {
-    if (!content || content.trim() === '') {
-        return { error: 'コメント内容を入力してください' };
-    }
+export async function createComment(formData: FormData): {
+    const id = formData.get("id") as string;
+const comicId = formData.get("comicId") as string;
+const content = formData.get("comment") as string;
 
-    try {
-        const db = getDatabase();
-        await db.insert(comments).values({
-            id: randomUUID(),
-            comicId: comicId,
-            content: content.trim(),
-            createdAt: new Date().toISOString(),
-        });
+if (!content || content.trim() === '') {
+    return { error: 'コメント内容を入力してください' };
+}
 
-        revalidateTag(`comments-${comicId}`);
-        return { success: true };
-    } catch (error) {
-        return { error: 'コメントの投稿に失敗しました' };
-    }
+if (content.length > 500) {
+    return { error: 'コメントは500文字以内で入力してください' };
+}
+
+try {
+    const db = getDatabase();
+    await db.insert(comments).values({
+        id: id,
+        comicId: comicId,
+        content: content.trim(),
+        createdAt: new Date().toISOString(),
+    });
+
+    revalidateTag(`comments-${comicId}`);
+    return { success: true };
+} catch (error) {
+    return { error: 'コメントの投稿に失敗しました' };
+}
 }
