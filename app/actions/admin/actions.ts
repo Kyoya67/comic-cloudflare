@@ -5,6 +5,9 @@ import { comics } from "@/db/schema";
 import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { handleAdminError, handleAdminSuccess } from "./state";
+import type { AdminFormState } from "./state";
+import type { Comic } from "@/types/comic";
 
 let memoizedDb: ReturnType<typeof drizzle> | null = null;
 
@@ -17,23 +20,23 @@ function getDatabase() {
     return memoizedDb;
 }
 
-export async function uploadComicAction(formData: FormData) {
+export async function uploadComicAction(formData: FormData): Promise<AdminFormState> {
     const titleValue = formData.get("title");
     const fileValue = formData.get("file");
 
     if (!titleValue || typeof titleValue !== "string") {
-        return { error: "タイトルを入力してください" };
+        return handleAdminError({ message: "タイトルを入力してください", status: 400 });
     }
     if (titleValue.trim() === "") {
-        return { error: "タイトルを入力してください" };
+        return handleAdminError({ message: "タイトルを入力してください", status: 400 });
     }
     const title = titleValue.trim();
 
     if (!fileValue || !(fileValue instanceof File)) {
-        return { error: "ファイルを選択してください" };
+        return handleAdminError({ message: "ファイルを選択してください", status: 400 });
     }
     if (fileValue.size === 0) {
-        return { error: "有効なファイルを選択してください" };
+        return handleAdminError({ message: "有効なファイルを選択してください", status: 400 });
     }
     const file = fileValue;
 
@@ -53,15 +56,23 @@ export async function uploadComicAction(formData: FormData) {
 
         try {
             const db = getDatabase();
-            await db.insert(comics).values({
+            const result = await db.insert(comics).values({
                 title: title,
                 order: sql`(SELECT COALESCE(MAX("order"), 0) + 1 FROM ${comics})`,
                 imageUrl: fileName,
                 updatedAt: new Date().toISOString(),
-            });
+            }).returning();
+
+            const comic: Comic = {
+                id: result[0].id,
+                title: result[0].title,
+                order: result[0].order,
+                imageUrl: result[0].imageUrl,
+                updatedAt: result[0].updatedAt,
+            };
 
             revalidatePath("/admin");
-            return { success: true };
+            return handleAdminSuccess(comic);
         } catch (dbError) {
             if (fileUploaded) {
                 try {
@@ -72,13 +83,13 @@ export async function uploadComicAction(formData: FormData) {
             }
 
             const errorMessage = dbError instanceof Error ? dbError.message : "データベースエラーが発生しました";
-            return { error: `データベース操作に失敗しました: ${errorMessage}` };
+            return handleAdminError({ message: `データベース操作に失敗しました: ${errorMessage}`, status: 500 });
         }
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : "不明なエラー";
         if (errorMessage.includes("R2")) {
-            return { error: `ファイルアップロードに失敗しました: ${errorMessage}` };
+            return handleAdminError({ message: `ファイルアップロードに失敗しました: ${errorMessage}`, status: 500 });
         }
-        return { error: `アップロードに失敗しました: ${errorMessage}` };
+        return handleAdminError({ message: `アップロードに失敗しました: ${errorMessage}`, status: 500 });
     }
-}
+} 

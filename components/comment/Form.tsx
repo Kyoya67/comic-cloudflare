@@ -1,14 +1,15 @@
 import { Button } from '../controls';
+import { RefObject } from 'react';
 
-type Props = {
-    formAction: (formData: FormData) => Promise<void>;
+type FormProps = {
     comicId: string;
+    formRef: RefObject<HTMLFormElement | null>;
+    formAction: (formData: FormData) => Promise<void>;
 }
 
-export default function Form({ formAction, comicId }: Props) {
-
+export default function Form({ comicId, formRef, formAction }: FormProps) {
     return (
-        <form action={formAction} className="mb-6">
+        <form ref={formRef} action={formAction} className="mb-6">
             <input type="hidden" name="comicId" value={comicId} />
             <textarea
                 name="comment"
@@ -23,4 +24,4 @@ export default function Form({ formAction, comicId }: Props) {
             </div>
         </form>
     );
-} 
+}       

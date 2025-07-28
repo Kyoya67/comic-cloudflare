@@ -1,10 +1,13 @@
 'use client';
 
-import CommentItem from './Item';
+import Item from './Item';
 import type { Comment } from '../../lib/commentApi';
 
+// OptComment型を定義（Section.tsxと同じ）
+type OptComment = Comment & { sending?: boolean };
+
 interface ListProps {
-    comments: Comment[];
+    comments: OptComment[];
 }
 
 export default function List({ comments }: ListProps) {
@@ -20,7 +23,7 @@ export default function List({ comments }: ListProps) {
     return (
         <div className="space-y-4">
             {comments.map((comment) => (
-                <CommentItem key={comment.id} comment={comment} />
+                <Item key={comment.id} comment={comment} />
             ))}
         </div>
     );
