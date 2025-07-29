@@ -200,7 +200,7 @@ cd comic-cloudflare
 npm install
 # または
 pnpm install  # 推奨: 高速インストール
-# または  
+# または
 yarn install
 ```
 
@@ -211,7 +211,7 @@ yarn install
 ```env
 # NextAuth設定
 AUTH_SECRET=your-auth-secret-here
-AUTH_GITHUB_ID=your-github-oauth-app-id  
+AUTH_GITHUB_ID=your-github-oauth-app-id
 AUTH_GITHUB_SECRET=your-github-oauth-app-secret
 ADMIN_GITHUB_USERNAME=your-github-username
 
