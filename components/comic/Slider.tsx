@@ -114,4 +114,4 @@ export default function Slider({
             )}
         </div>
     );
-} 
+}

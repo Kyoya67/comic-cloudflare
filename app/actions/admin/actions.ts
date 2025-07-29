@@ -24,10 +24,7 @@ export async function uploadComicAction(formData: FormData): Promise<AdminFormSt
     const titleValue = formData.get("title");
     const fileValue = formData.get("file");
 
-    if (!titleValue || typeof titleValue !== "string") {
-        return handleAdminError({ message: "タイトルを入力してください", status: 400 });
-    }
-    if (titleValue.trim() === "") {
+    if (!titleValue || typeof titleValue !== "string" || titleValue.trim() === "") {
         return handleAdminError({ message: "タイトルを入力してください", status: 400 });
     }
     const title = titleValue.trim();

@@ -47,7 +47,6 @@ export default function MainDisplay({ comics, selectedComic, onComicSelect }: Ma
                         order={selectedComic.order}
                         main
                     />
-
                 </>
             )}
             <PreloadImages

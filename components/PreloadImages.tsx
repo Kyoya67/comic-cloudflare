@@ -6,10 +6,10 @@ import type { Comic } from '../types/comic';
 interface PreloadImagesProps {
     comics: Comic[];
     currentIndex: number;
-    preloadRange?: number;
+    preloadRange: number;
 }
 
-export default function PreloadImages({ comics, currentIndex, preloadRange = 2 }: PreloadImagesProps) {
+export default function PreloadImages({ comics, currentIndex, preloadRange }: PreloadImagesProps) {
     const preloadedImages = useRef<Set<string>>(new Set());
 
     useEffect(() => {

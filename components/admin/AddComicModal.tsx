@@ -37,7 +37,7 @@ export default function AddComicModal({ isOpen, onClose }: AddComicModalProps) {
 
         try {
             const result = await uploadComicAction(formData);
-            if (result?.success) {
+            if (result?.comic) {
                 setTitle('');
                 setFile(null);
                 onClose();
