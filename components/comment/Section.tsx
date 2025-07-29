@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useOptimistic } from "react";
+import { useEffect, useOptimistic, useRef, useState } from "react";
 
 import { getComments, type Comment } from "@/lib/commentApi";
 import { createComment } from "@/app/actions/comment/actions";
@@ -29,12 +29,11 @@ export default function Section({ comicId }: SectionProps) {
   async function formAction(formData: FormData) {
     const comicId = formData.get("comicId") as string;
     const content = formData.get("comment") as string;
-    const createdAt = new Date().toISOString();
 
     addOptimisticComment({
-      comicId: comicId,
-      content: content,
-      createdAt: createdAt,
+      comicId,
+      content,
+      createdAt: "",
       sending: true,
     });
 
@@ -52,7 +51,6 @@ export default function Section({ comicId }: SectionProps) {
         fetchComments();
       }
     } catch (error) {
-      console.error("Failed to create comment:", error);
       alert("コメントの投稿に失敗しました。もう一度お試しください。");
       return;
     }
