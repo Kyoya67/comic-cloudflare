@@ -1,38 +1,38 @@
-'use client';
+"use client";
 
-import { EditButton, DeleteButton } from './';
+import { EditButton, DeleteButton } from "./";
 
 interface ComicActionButtonsProps {
-    comicId: string;
-    onEdit?: (comicId: string) => void;
-    onDelete?: (comicId: string) => void;
+  comicId: string;
+  onEdit?: (comicId: string) => void;
+  onDelete?: (comicId: string) => void;
 }
 
 export default function ComicActionButtons({
-    comicId,
-    onEdit,
-    onDelete
+  comicId,
+  onEdit,
+  onDelete,
 }: ComicActionButtonsProps) {
-    const handleEdit = () => {
-        if (onEdit) {
-            onEdit(comicId);
-        } else {
-            console.warn('Edit comic fallback triggered for comicId:', comicId);
-        }
-    };
+  const handleEdit = () => {
+    if (onEdit) {
+      onEdit(comicId);
+    } else {
+      console.warn("Edit comic fallback triggered for comicId:", comicId);
+    }
+  };
 
-    const handleDelete = () => {
-        if (onDelete) {
-            onDelete(comicId);
-        } else {
-            console.log('Delete comic:', comicId);
-        }
-    };
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete(comicId);
+    } else {
+      console.log("Delete comic:", comicId);
+    }
+  };
 
-    return (
-        <div className="absolute bottom-4 right-4 flex space-x-2 z-10">
-            <EditButton onClick={handleEdit} />
-            <DeleteButton onClick={handleDelete} />
-        </div>
-    );
-} 
+  return (
+    <div className="absolute bottom-4 right-4 flex space-x-2 z-10">
+      <EditButton onClick={handleEdit} />
+      <DeleteButton onClick={handleDelete} />
+    </div>
+  );
+}

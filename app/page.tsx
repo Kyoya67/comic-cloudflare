@@ -1,8 +1,8 @@
-import Viewer from '../components/comic/Viewer';
-import { getComics } from '../lib/getComics';
-import { ComicsProvider } from '../context/ComicsContext';
+import Viewer from "../components/comic/Viewer";
+import { getComics } from "../lib/getComics";
+import { ComicsProvider } from "../context/ComicsContext";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const comics = await getComics();
@@ -14,4 +14,3 @@ export default async function Home() {
     </ComicsProvider>
   );
 }
-

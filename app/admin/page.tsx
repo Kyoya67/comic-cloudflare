@@ -1,19 +1,19 @@
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import AdminContent from '../../components/admin/content';
-import { getComics } from '../../lib/getComics';
-import type { Comic } from '../../types/comic';
+import AdminContent from "../../components/admin/content";
+import { getComics } from "../../lib/getComics";
+import type { Comic } from "../../types/comic";
 
 export default async function AdminPage() {
-    const session = await auth();
+  const session = await auth();
 
-    // if (!session) {
-    //     redirect('/auth/signin');
-    // }
+  // if (!session) {
+  //     redirect('/auth/signin');
+  // }
 
-    const comics: Comic[] = await getComics();
+  const comics: Comic[] = await getComics();
 
-    return <AdminContent comics={comics} />;
+  return <AdminContent comics={comics} />;
 }

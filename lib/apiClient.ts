@@ -1,23 +1,22 @@
-
 export function getBaseUrl(): string {
-    if (typeof window !== 'undefined') return '';
+  if (typeof window !== "undefined") return "";
 
-    if (process.env.NODE_ENV === 'development') {
-        return 'http://localhost:3000';
-    }
+  if (process.env.NODE_ENV === "development") {
+    return "http://localhost:3000";
+  }
 
-    if (process.env.NODE_ENV === 'production') {
-        return process.env.NEXT_PUBLIC_SITE_URL || '';
-    }
+  if (process.env.NODE_ENV === "production") {
+    return process.env.NEXT_PUBLIC_SITE_URL || "";
+  }
 
-    return '';
+  return "";
 }
 
 export async function apiFetch(path: string, init?: RequestInit) {
-    const res = await fetch(`${getBaseUrl()}${path}`, init);
-    if (!res.ok) {
-        const msg = await res.text().catch(() => '');
-        throw new Error(`API fetch failed (${res.status}) ${msg}`);
-    }
-    return res;
+  const res = await fetch(`${getBaseUrl()}${path}`, init);
+  if (!res.ok) {
+    const msg = await res.text().catch(() => "");
+    throw new Error(`API fetch failed (${res.status}) ${msg}`);
+  }
+  return res;
 }

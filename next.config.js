@@ -9,7 +9,9 @@ module.exports = nextConfig;
 // Use dynamic import for ESM module
 (async () => {
   try {
-    const { initOpenNextCloudflareForDev } = await import("@opennextjs/cloudflare");
+    const { initOpenNextCloudflareForDev } = await import(
+      "@opennextjs/cloudflare"
+    );
     initOpenNextCloudflareForDev();
   } catch (error) {
     console.error("Error initializing OpenNext Cloudflare for dev:", error);

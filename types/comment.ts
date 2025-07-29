@@ -9,4 +9,4 @@ export interface CommentFormData {
   id: string;
   comicId: string;
   comment: string;
-} 
+}

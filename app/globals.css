@@ -12,7 +12,8 @@
   --color-foreground: var(--foreground);
 }
 
-html, body {
+html,
+body {
   overscroll-behavior: none;
   overflow-x: hidden;
 }
@@ -26,7 +27,7 @@ body {
 }
 
 body::before {
-  content: '';
+  content: "";
   position: fixed;
   top: -100vh;
   left: 0;

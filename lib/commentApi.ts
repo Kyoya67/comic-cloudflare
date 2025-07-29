@@ -1,17 +1,17 @@
-import { apiFetch } from './apiClient';
+import { apiFetch } from "./apiClient";
 
 export type Comment = {
-    id?: string;
-    comicId: string;
-    content: string;
-    createdAt: string;
-}
+  id?: string;
+  comicId: string;
+  content: string;
+  createdAt: string;
+};
 
 export async function getComments(comicId: string): Promise<Comment[]> {
-    const res = await apiFetch(`/api/comics/${comicId}/comments`, {
-        next: { tags: [`comments-${comicId}`] }
-    });
+  const res = await apiFetch(`/api/comics/${comicId}/comments`, {
+    next: { tags: [`comments-${comicId}`] },
+  });
 
-    const result = await res.json() as Comment[];
-    return result;
+  const result = (await res.json()) as Comment[];
+  return result;
 }

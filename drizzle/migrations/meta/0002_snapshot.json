@@ -87,12 +87,8 @@
           "name": "comments_comic_id_comics_id_fk",
           "tableFrom": "comments",
           "tableTo": "comics",
-          "columnsFrom": [
-            "comic_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["comic_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
